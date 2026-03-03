@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/dork/academy/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Academy - Cyber Intelligence Tutorials | Dork</title>
+    <meta name="description" content="Learn OSINT techniques, Google Dorking advanced strategies, and cybersecurity research methods.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* ESTILOS ESPECÍFICOS PARA ACADEMY (Grid System) */
+        
+        .breadcrumb {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 15px;
+        }
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .breadcrumb a:hover { text-shadow: 0 0 5px var(--primary); }
+
+        /* Layout de artículos en cuadrícula */
+        .academy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            transform: translateY(-5px);
+        }
+
+        /* Decoración de esquinas estilo Cyberpunk */
+        .corner-decor {
+            position: absolute;
+            width: 10px; height: 10px;
+            border: 2px solid var(--primary);
+            transition: all 0.3s;
+            opacity: 0.5;
+        }
+        .article-card:hover .corner-decor { opacity: 1; width: 20px; height: 20px; }
+        
+        .top-left { top: -1px; left: -1px; border-bottom: none; border-right: none; }
+        .top-right { top: -1px; right: -1px; border-bottom: none; border-left: none; }
+        .bottom-left { bottom: -1px; left: -1px; border-top: none; border-right: none; }
+        .bottom-right { bottom: -1px; right: -1px; border-top: none; border-left: none; }
+
+        .article-meta { 
+            color: var(--primary); 
+            font-size: 0.75rem; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .article-card h2 { 
+            margin-bottom: 15px; 
+            font-size: 1.4rem; 
+            line-height: 1.4;
+        }
+        
+        .article-card h2 a { 
+            color: var(--text-bright); 
+            text-decoration: none; 
+            transition: color 0.3s;
+        }
+        .article-card h2 a:hover { color: var(--primary); }
+
+        .article-excerpt { 
+            color: var(--text-dim); 
+            line-height: 1.6; 
+            font-size: 0.9rem;
+            flex-grow: 1; /* Empuja el botón hacia abajo */
+            margin-bottom: 20px;
+            border-left: 2px solid var(--border);
+            padding-left: 15px;
+        }
+
+        .read-btn {
+            align-self: flex-start;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-family: inherit;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .read-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .academy-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="particles-bg"></div>
+
+    <div class="container">
+        
+        <header>
+            <div class="status-bar">
+                <span class="status-item"><i class="fas fa-circle pulse-green"></i> DATABASE: ACCESS_GRANTED</span>
+                <span class="status-item">ENCRYPTION: ON</span>
+                <span class="status-item">V.4.0</span>
+            </div>
+
+            <div class="header-content">
+                <h1 class="main-title">
+                    <span class="glitch" data-text="ACADEMY">ACADEMY_<span class="highlight">DB</span></span>
+                </h1>
+                <p class="subtitle">
+                    <i class="fas fa-graduation-cap"></i> KNOWLEDGE BASE FOR SECURITY RESEARCHERS
+                </p>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="../index.html" class="nav-item">
+                    <i class="fas fa-home"></i> TOOL
+                </a>
+                <a href="../meta-extractor.html" class="nav-item">
+                    <i class="fas fa-image"></i> EXIF_HUNTER
+                </a>
+                <a href="../emoji-crypt.html" class="nav-item">
+                    <i class="fas fa-lock"></i> EMOJI_CRYPT
+                </a>
+                <a href="index.html" class="nav-item active">
+                    <i class="fas fa-graduation-cap"></i> ACADEMY
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="breadcrumb">
+                <i class="fas fa-terminal"></i> <a href="../index.html">ROOT</a> / SYSTEM / <span style="color: var(--text-bright);">ACADEMY_INDEX</span>
+            </div>
+
+            <section class="instructions-panel" style="margin-bottom: 40px;">
+                <div class="panel-header">
+                    <i class="fas fa-folder-open"></i> CLASSIFIED TUTORIALS
+                </div>
+                <div class="info-grid">
+                    <p style="color: var(--text-dim);">
+                        Access our comprehensive library of OSINT methodologies, Google Dorking strategies, and defensive protocols. <br>
+                        <span style="color: var(--primary);">// WARNING: Knowledge is power. Use responsibly.</span>
+                    </p>
+                </div>
+            </section>
+
+            <div class="academy-grid">
+                
+                <article class="article-card">
+                    <div class="corner-decor top-left"></div>
+                    <div class="corner-decor top-right"></div>
+                    <div class="corner-decor bottom-left"></div>
+                    <div class="corner-decor bottom-right"></div>
+
+                    <div class="article-meta">
+                        <i class="fas fa-clock"></i> 2026.01.05 | <i class="fas fa-book"></i> REFERENCE_DB
+                    </div>
+                    <h2><a href="glossary.html">The Hacker's Glossary: 100+ Essential Terms</a></h2>
+                    <p class="article-excerpt">Confused by the jargon? Access our comprehensive database of essential cybersecurity terms, from SQL Injection to Zero-Day exploits.</p>
+                    <a href="glossary.html" class="read-btn">
+                        [ ACCESS_FILE ] <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="article-card">
+                    <div class="corner-decor top-left"></div>
+                    <div class="corner-decor top-right"></div>
+                    <div class="corner-decor bottom-left"></div>
+                    <div class="corner-decor bottom-right"></div>
+
+                    <div class="article-meta">
+                        <i class="fas fa-clock"></i> 2026.01.05 | <i class="fas fa-tag"></i> BEGINNER_GUIDE
+                    </div>
+                    <h2><a href="what-is-osint.html">What is OSINT? The Ultimate Guide</a></h2>
+                    <p class="article-excerpt">Open Source Intelligence (OSINT) is the practice of collecting information from publicly available sources. Initialize your training here.</p>
+                    <a href="what-is-osint.html" class="read-btn">
+                        [ ACCESS_FILE ] <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="article-card">
+                    <div class="corner-decor top-left"></div>
+                    <div class="corner-decor top-right"></div>
+                    <div class="corner-decor bottom-left"></div>
+                    <div class="corner-decor bottom-right"></div>
+
+                    <div class="article-meta">
+                        <i class="fas fa-clock"></i> 2026.01.05 | <i class="fas fa-code"></i> TECHNICAL_TUTORIAL
+                    </div>
+                    <h2><a href="top-10-dorks.html">Top 10 Google Dorks for Bug Bounty</a></h2>
+                    <p class="article-excerpt">Discover the most effective search operators to find vulnerabilities, exposed databases, and sensitive configuration files. Execute commands now.</p>
+                    <a href="top-10-dorks.html" class="read-btn">
+                        [ ACCESS_FILE ] <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <article class="article-card">
+                    <div class="corner-decor top-left"></div>
+                    <div class="corner-decor top-right"></div>
+                    <div class="corner-decor bottom-left"></div>
+                    <div class="corner-decor bottom-right"></div>
+
+                    <div class="article-meta">
+                        <i class="fas fa-clock"></i> 2026.01.05 | <i class="fas fa-shield-alt"></i> BLUE_TEAM
+                    </div>
+                    <h2><a href="defensive-dorking.html">Defensive Dorking: Audit Protocols</a></h2>
+                    <p class="article-excerpt">Learn how to use Google Dorks to protect your organization and remove sensitive information from search results. Secure your perimeter.</p>
+                    <a href="defensive-dorking.html" class="read-btn">
+                        [ ACCESS_FILE ] <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+            </div>
+
+
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-wave"></div>
+            <div class="footer-container">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-info-circle"></i> ABOUT THE PROJECT</h3>
+                    <p>Dork is an <strong>Open Source</strong> platform dedicated to democratizing <strong>Cybersecurity</strong> and <strong>OSINT</strong> tools.</p>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3><i class="fas fa-link"></i> QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Main Tool</a></li>
+                        <li><a href="../meta-extractor.html"><i class="fas fa-chevron-right"></i> EXIF Hunter</a></li>
+                        <li><a href="../privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 Dork | Developed with <i class="fas fa-heart pulse"></i></p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function createComet() {
+            const container = document.body;
+            const comet = document.createElement('div');
+            comet.className = 'comet';
+            const duration = 4 + Math.random() * 6;
+            comet.style.left = Math.random() * 100 + '%';
+            comet.style.setProperty('--comet-duration', duration + 's');
+            comet.style.setProperty('--comet-size', (2 + Math.random() * 3) + 'px');
+            comet.style.setProperty('--tail-length', (80 + Math.random() * 150) + 'px');
+            container.appendChild(comet);
+            setTimeout(() => comet.remove(), duration * 1000);
+        }
+        function spawnComets() {
+            createComet();
+            setTimeout(spawnComets, 1500 + Math.random() * 3000);
+        }
+        spawnComets();
+    </script>
+
+</body>
+</html>
+
