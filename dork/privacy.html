@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/dork/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Protocol | Dork</title>
+    <meta name="robots" content="noindex">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #e0e0e0;
+            --neon-green: #00ff41;
+            --border-color: #333;
+            --text-dim: #888;
+        }
+
+        /* RESET & BASE */
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            line-height: 1.6;
+            color: var(--text-main);
+            background: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+        }
+
+        /* FONDO DE REJILLA (GRID OVERLAY) */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* LINKS */
+        a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
+        a:hover { color: var(--neon-green); }
+
+        /* RETURN BUTTON */
+        .back-nav { margin-bottom: 40px; border-bottom: 1px dashed var(--border-color); padding-bottom: 20px; }
+        .back-btn {
+            color: var(--neon-green);
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid var(--neon-green);
+            padding: 10px 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .back-btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
+
+        /* TIPOGRAFÍA */
+        h1 { 
+            color: #fff; 
+            margin-bottom: 10px; 
+            font-size: 2.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: -1px;
+        }
+
+        .meta-info {
+            color: var(--neon-green);
+            margin-bottom: 50px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 { 
+            color: #fff; 
+            margin-top: 50px; 
+            font-size: 1.5rem; 
+            border-left: 4px solid var(--neon-green); 
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+
+        p, li { margin-bottom: 15px; color: #ccc; }
+        
+        /* Technical Lists */
+        ul { margin-left: 20px; list-style: none; }
+        li { position: relative; padding-left: 20px; }
+        li::before {
+            content: ">>";
+            color: var(--neon-green);
+            position: absolute;
+            left: 0;
+            font-size: 0.8em;
+            top: 4px;
+        }
+
+        code {
+            background: #111;
+            border: 1px solid #333;
+            color: var(--neon-green);
+            padding: 2px 5px;
+            font-size: 0.9em;
+        }
+
+        /* FOOTER */
+        .legal-footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-overlay"></div>
+
+    <div class="legal-container">
+        
+        <nav class="back-nav">
+            <a href="index.html" class="back-btn">&lt; RETURN_TO_SYSTEM</a>
+        </nav>
+
+        <h1>Privacy Protocol</h1>
+        <div class="meta-info">
+            STATUS: ACTIVE // LAST_UPDATE: 2026.01.22
+        </div>
+
+        <p>At <strong>Dork</strong> (accessible from #), the privacy of our operators is a primary directive. This document outlines the types of data intercepted and how it is processed.</p>
+
+        <h2>1. Architecture & Data Collection</h2>
+        <p>Dork operates as a <strong>Client-Side Application</strong>. 
+        We do not store your search queries, target domains, or generated payloads on our servers. All processing is executed locally within your browser instance.</p>
+
+        <h2>2. Third-Party Protocols (Cookies)</h2>
+        <p>Google is a third-party vendor on this site. It uses cookies (DART cookies) to serve ads based on visits to <code>local</code> and other nodes on the internet.</p>
+        <p>Operators may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">[ LINK_TO_POLICY ]</a></p>
+
+        <h2>3. External Ad Servers</h2>
+        <p>Third-party ad servers use technologies like cookies, JavaScript, or Web Beacons. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns.</p>
+        <p><strong>NOTE:</strong> Dork has no access to or control over these cookies used by third-party advertisers.</p>
+        
+        <p style="margin-top: 20px; border-top: 1px dashed #333; padding-top: 20px;"><strong>Detailed Vendor List & Preferences:</strong></p>
+        <span id="ezoic-privacy-policy-embed"></span>
+        <h2>4. System Logs & Analytics</h2>
+        <p>Dork follows standard procedure using log files and Google Analytics 4 (GA4). The information collected includes:</p>
+        <ul>
+            <li>Internet Protocol (IP) addresses</li>
+            <li>Browser type and version</li>
+            <li>Internet Service Provider (ISP)</li>
+            <li>Date and time stamps</li>
+        </ul>
+        <p>These are not linked to any information that is personally identifiable.</p>
+
+        <h2>5. Data Rights (GDPR Protocol)</h2>
+        <p>We ensure you are fully aware of your data protection rights. Every user is entitled to:</p>
+        <ul>
+            <li><strong>The right to access</strong> – Request copies of your personal data.</li>
+            <li><strong>The right to rectification</strong> – Request correction of inaccurate info.</li>
+            <li><strong>The right to erasure</strong> – Request deletion of personal data.</li>
+        </ul>
+
+        <h2>6. User Consent</h2>
+        <p>By accessing our system, you hereby consent to our Privacy Policy and agree to its Terms.</p>
+
+        <footer class="legal-footer">
+            <p>© 2026 Dork | END_OF_FILE</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

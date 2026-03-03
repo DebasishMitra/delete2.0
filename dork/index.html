@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>DorkSearch PRO v4.0 - Advanced Google Dorks Generator | OSINT & Security</title>
+    <meta name="title" content="Google Dorks Generator: Professional OSINT Tool | DorkSearch PRO">
+    <meta name="description" content="The ultimate Google Dorking tool. Generate advanced dorks for pentesting, OSINT and information gathering. 100% private and free.">
+    
+    <meta name="keywords" content="google dorks, google hacking database, osint tool, dorking, cybersecurity audit, penetration testing, ethical hacking, security research, google search operators, information gathering, reconnaissance tool, ghdb">
+    <meta name="author" content="DorkSearch PRO">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <link rel="canonical" href="https://dorksearch.pro/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dorksearch.pro/">
+    <meta property="og:title" content="DorkSearch PRO v4.0 - Advanced Google Dorks Generator">
+    <meta property="og:description" content="Professional Google Dorking tool for pentesting and OSINT. Find exposed information, sensitive files and vulnerabilities.">
+    <meta property="og:image" content="https://dorksearch.pro/og-image.png">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DorkSearch PRO",
+      "description": "Professional Google Dorking tool for pentesting and OSINT",
+      "url": "https://dorksearch.pro/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="particles-bg" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <div class="status-bar">
+                <span class="status-item"><i class="fas fa-circle pulse-green"></i> SYSTEM: ONLINE</span>
+                <span class="status-item">MODE: <span id="status-mode">SECURE</span></span>
+                <span class="status-item">V.4.0 PROFESSIONAL</span>
+                <span class="status-item" id="query-counter">QUERIES: 0</span>
+            </div>
+
+            <div class="header-content">
+                <h1 class="main-title">
+                    <span class="glitch" data-text="DORKSEARCH">DORK<span class="highlight">SEARCH</span></span>
+                    <span class="pro-badge">PRO</span>
+                </h1>
+                
+                <p class="subtitle">
+                    <i class="fas fa-shield-alt"></i> ADVANCED PASSIVE RECONNAISSANCE PLATFORM
+                    <span class="separator">●</span>
+                    <i class="fas fa-search-location"></i> OSINT & PENTESTING TOOLKIT
+                </p>
+                <p class="tagline">
+                    <span class="tag-item"><i class="fas fa-rocket"></i> Instant Generation</span>
+                    <span class="tag-item"><i class="fas fa-lock"></i> 100% Client-Side</span>
+                    <span class="tag-item"><i class="fas fa-code-branch"></i> Open Source</span>
+                    <span class="tag-item"><i class="fas fa-database"></i> 150+ Dorks</span>
+                </p>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-item active">
+                    <i class="fas fa-home"></i> TOOL
+                </a>
+                <a href="meta-extractor.html" class="nav-item">
+                    <i class="fas fa-image"></i> EXIF_HUNTER
+                </a>
+                <a href="emoji-crypt.html" class="nav-item">
+                    <i class="fas fa-lock"></i> EMOJI_CRYPT
+                </a>
+                <a href="academy/index.html" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i> ACADEMY
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="mode-switcher-container">
+                <div class="mode-switcher">
+                    <button id="btn-sec" class="mode-btn active" data-mode="sec">
+                        <div class="mode-icon">
+                            <i class="fas fa-shield-virus"></i>
+                        </div>
+                        <div class="mode-info">
+                            <h3>CYBER_INTEL</h3>
+                            <p>Pentesting • Bug Bounty • Red Team</p>
+                        </div>
+                    </button>
+                    
+                    <button id="btn-media" class="mode-btn" data-mode="media">
+                        <div class="mode-icon">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <div class="mode-info">
+                            <h3>FILE_HUNTER</h3>
+                            <p>Documents • Media • Personal Info</p>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="mode-description" id="mode-description">
+                    <div id="desc-sec" class="description-content active">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Professional Mode:</strong> Find vulnerabilities, exposed config files, admin panels, database backups and sensitive endpoints. Ideal for security audits and bug bounty programs.</p>
+                    </div>
+                    <div id="desc-media" class="description-content">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Personal Search Mode:</strong> Locate public documents, people information, multimedia files, contact data and specific content on the web. Perfect for personal research and basic OSINT.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-database"></i>
+                    <div class="stat-info">
+                        <span class="stat-number" id="total-dorks">150+</span>
+                        <span class="stat-label">Available Dorks</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="stat-info">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Pro Categories</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="stat-info">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Public Categories</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <span class="stat-number">&lt;1s</span>
+                        <span class="stat-label">Generation Time</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="instructions-panel">
+                <div class="panel-header">
+                    <i class="fas fa-terminal"></i> OPERATIONAL PROTOCOL
+                </div>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <i class="fas fa-crosshairs"></i>
+                        <h4>SELECT MODE</h4>
+                        <p>Choose between Cyber_Intel (pro) or File_Hunter (public)</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <i class="fas fa-bullseye"></i>
+                        <h4>DEFINE TARGET</h4>
+                        <p>Enter domain (sec) or name/topic (media)</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <i class="fas fa-layer-group"></i>
+                        <h4>CHOOSE DORK</h4>
+                        <p>Select category and pick specific dork from list</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">04</div>
+                        <i class="fas fa-rocket"></i>
+                        <h4>EXECUTE SCAN</h4>
+                        <p>Launch search on Google automatically</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="input-section" aria-label="Search Configuration">
+                <div class="section-header">
+                    <i class="fas fa-terminal"></i>
+                    <h3>SEARCH CONFIGURATION</h3>
+                </div>
+                
+                <div class="input-container">
+                    <div id="domain-group" class="input-group">
+                        <label for="target">
+                            <i class="fas fa-server"></i> TARGET DOMAIN
+                            <span class="label-hint">(example: example.com)</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="prefix">site:</span>
+                            <input type="text" 
+                                   id="target" 
+                                   placeholder="example.com" 
+                                   autocomplete="off"
+                                   aria-label="Enter target domain">
+                            <button class="clear-btn" onclick="clearInput('target')" title="Clear">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="keyword-input">
+                            <i class="fas fa-search"></i> KEYWORD / QUERY
+                            <span class="label-hint" id="keyword-hint">(specific topic or search term)</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="prefix"><i class="fas fa-hashtag"></i></span>
+                            <input type="text" 
+                                   id="keyword-input" 
+                                   placeholder="Loading parameters..." 
+                                   autocomplete="off"
+                                   aria-label="Enter search keyword">
+                            <button class="clear-btn" onclick="clearInput('keyword-input')" title="Clear">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button onclick="runQuickSearch()" class="scan-btn primary">
+                            <i class="fas fa-bolt"></i> 
+                            <span id="scan-text">EXECUTE SCAN</span>
+                        </button>
+                        <button onclick="clearAllInputs()" class="scan-btn secondary">
+                            <i class="fas fa-redo"></i> 
+                            RESET
+                        </button>
+                    </div>
+                    
+                    <div id="query-preview" class="query-box hidden">
+                        <div class="query-header">
+                            <span class="query-label">
+                                <i class="fas fa-code"></i> GENERATED QUERY:
+                            </span>
+                            <button id="copy-btn" onclick="copyQuery()" title="Copy query">
+                                <i class="fas fa-copy"></i> COPY
+                            </button>
+                        </div>
+                        <code id="query-text">waiting for input...</code>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dorks-section">
+                <div class="section-header">
+                    <div>
+                        <i class="fas fa-layer-group"></i>
+                        <h3 id="dorks-title">AVAILABLE CATEGORIES</h3>
+                    </div>
+                    <div class="filter-controls">
+                        <input type="text" 
+                               id="search-dorks" 
+                               placeholder="🔍 Search category..." 
+                               onkeyup="filterDorks()"
+                               class="search-dorks-input">
+                    </div>
+                </div>
+                <div class="dorks-grid" id="dorks-container" aria-label="Google Dork Categories">
+                    </div>
+            </section>
+
+            <div id="dork-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">SELECT DORK</h3>
+                        <button class="modal-close" onclick="closeDorkModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        </div>
+                </div>
+            </div>
+
+            <section class="custom-dork-section">
+                <div class="section-header">
+                    <i class="fas fa-code"></i>
+                    <h3>ADVANCED CONSTRUCTOR</h3>
+                </div>
+                <p class="section-description">
+                    <i class="fas fa-info-circle"></i> 
+                    Create custom queries combining advanced Google operators
+                </p>
+                
+                <div class="custom-builder">
+                    <div class="operator-chips">
+                        <button class="chip" onclick="insertOperator('site:')" title="Search in specific domain">
+                            <code>site:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('filetype:')" title="Search file type">
+                            <code>filetype:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('inurl:')" title="Search in URL">
+                            <code>inurl:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('intitle:')" title="Search in title">
+                            <code>intitle:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('intext:')" title="Search in text">
+                            <code>intext:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('ext:')" title="File extension">
+                            <code>ext:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('cache:')" title="View Google cache">
+                            <code>cache:</code>
+                        </button>
+                        <button class="chip" onclick="insertOperator('related:')" title="Related sites">
+                            <code>related:</code>
+                        </button>
+                    </div>
+                    
+                    <div class="custom-input-group">
+                        <textarea id="custom-dork-input" 
+                                  placeholder='Example: site:example.com inurl:admin filetype:php intitle:"login"' 
+                                  rows="3"
+                                  aria-label="Custom Dork Query"></textarea>
+                        <button onclick="runCustomDork()" class="execute-btn" aria-label="Execute custom dork">
+                            <i class="fas fa-play"></i> EXECUTE
+                        </button>
+                    </div>
+                    
+                    <div class="custom-examples">
+                        <p><strong>Advanced query examples:</strong></p>
+                        <div class="example-chips">
+                            <button class="example-chip" onclick="loadExample('site:*.edu filetype:pdf intitle:&quot;confidential&quot;')">
+                                📄 Confidential PDFs in .edu
+                            </button>
+                            <button class="example-chip" onclick="loadExample('inurl:admin intitle:login filetype:php')">
+                                🔐 PHP admin panels
+                            </button>
+                            <button class="example-chip" onclick="loadExample('filetype:sql intext:password OR intext:username')">
+                                🗄️ SQL files with credentials
+                            </button>
+                            <button class="example-chip" onclick="loadExample('site:github.com &quot;api_key&quot; OR &quot;API_SECRET&quot;')">
+                                🔑 API Keys on GitHub
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="history-section" id="history-section" style="display: none;">
+                <div class="section-header">
+                    <div>
+                        <i class="fas fa-history"></i>
+                        <h3>SEARCH HISTORY</h3>
+                    </div>
+                    <button onclick="clearHistory()" class="clear-history-btn">
+                        <i class="fas fa-trash"></i> CLEAR
+                    </button>
+                </div>
+                <div id="history-container" class="history-grid">
+                    </div>
+            </section>
+
+            <section class="info-section">
+                <h2><i class="fas fa-book"></i> DOCUMENTATION & TECHNICAL GUIDE</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-question-circle"></i>
+                            <h3>What is Google Dorking?</h3>
+                        </div>
+                        <p><strong>Google Dorking</strong> (or Google Hacking) is an advanced OSINT technique that uses special search operators to find specific information indexed by Google. It's fundamental in:</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Pentesting and security audits</li>
+                            <li><i class="fas fa-check"></i> Bug Bounty programs</li>
+                            <li><i class="fas fa-check"></i> OSINT research</li>
+                            <li><i class="fas fa-check"></i> Passive reconnaissance (footprinting)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Critical Operators</h3>
+                        </div>
+                        <div class="operators-grid">
+                            <div class="operator-item">
+                                <code>site:</code>
+                                <span>Limit search to specific domain</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>filetype:</code>
+                                <span>Search specific extensions (pdf, xls, etc)</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>inurl:</code>
+                                <span>Search string in URL</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>intitle:</code>
+                                <span>Search in page title</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>intext:</code>
+                                <span>Search in body content</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>cache:</code>
+                                <span>View Google cached version</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card highlight">
+                        <div class="info-card-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Ethical & Legal Use</h3>
+                        </div>
+                        <p><strong>IMPORTANT:</strong> Using Google Dorks is completely legal as it only uses publicly indexed information. However:</p>
+                        <ul class="warning-list">
+                            <li><i class="fas fa-shield-alt"></i> Only use this tool on authorized systems</li>
+                            <li><i class="fas fa-shield-alt"></i> Don't access systems without explicit permission</li>
+                            <li><i class="fas fa-shield-alt"></i> Don't exploit found vulnerabilities without authorization</li>
+                            <li><i class="fas fa-shield-alt"></i> Respect responsible disclosure policies</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Professional Use Cases</h3>
+                        </div>
+                        <ul>
+                            <li><i class="fas fa-angle-right"></i> <strong>Bug Bounty:</strong> Identify exposed endpoints and files</li>
+                            <li><i class="fas fa-angle-right"></i> <strong>Red Team:</strong> Passive infrastructure reconnaissance</li>
+                            <li><i class="fas fa-angle-right"></i> <strong>Blue Team:</strong> Audit your own information exposure</li>
+                            <li><i class="fas fa-angle-right"></i> <strong>OSINT:</strong> Gather open source intelligence</li>
+                            <li><i class="fas fa-angle-right"></i> <strong>Research:</strong> Find public documents and data</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <section class="faq-section">
+            <h2><i class="fas fa-question-circle"></i> FREQUENTLY ASKED QUESTIONS</h2>
+            
+            <div class="faq-grid">
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        How does DorkSearch PRO work?
+                    </summary>
+                    <p>DorkSearch PRO automates the creation of complex queries by combining Google operators (site:, filetype:, inurl:, etc.) according to the selected category. We process your input 100% in the browser and generate the optimized dork that you can then execute on Google.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        Is it legal to use Google Dorks?
+                    </summary>
+                    <p><strong>Yes, it's completely legal.</strong> Google Dorks only search information already publicly indexed by Google. However, <strong>accessing or exploiting</strong> systems without authorization is illegal. Use it only for authorized audits, permitted bug bounty, or ethical OSINT research.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        Do you store my searches or data?
+                    </summary>
+                    <p><strong>No. Never.</strong> DorkSearch PRO is 100% client-side. Everything processes in your browser, we don't send any data to external servers. Your privacy is absolute. History is saved locally in your browser (localStorage) and you can delete it anytime.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        What's the difference between the two modes?
+                    </summary>
+                    <p><strong>CYBER_INTEL:</strong> Designed for security professionals. Includes dorks to find vulnerabilities, config files, backups, admin panels, etc. <strong>FILE_HUNTER:</strong> For general users looking for documents, public information, multimedia content or contact data.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        Can I use this for Bug Bounty?
+                    </summary>
+                    <p><strong>Absolutely!</strong> Google Dorking is a fundamental reconnaissance technique in bug bounty. It helps you identify attack surface, exposed files, subdomains and vulnerable endpoints. Always verify you have program authorization before testing.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        What is the GHDB (Google Hacking Database)?
+                    </summary>
+                    <p>The <strong>GHDB</strong> is a repository maintained by Offensive Security that compiles thousands of dorks categorized by vulnerability type. DorkSearch PRO implements the most effective GHDB dorks and adds our own optimized categories.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        How do I create an effective custom dork?
+                    </summary>
+                    <p>Combine multiple operators to refine results. Example: <code>site:example.com filetype:pdf intitle:"confidential" -inurl:public</code> searches PDFs with "confidential" in title, excluding URLs containing "public". Use the advanced constructor to experiment.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        <i class="fas fa-chevron-right"></i>
+                        Why don't some dorks give results?
+                    </summary>
+                    <p>It may be due to: (1) The site doesn't have that type of indexed content, (2) Google has updated its index, (3) The site uses robots.txt blocking crawling, (4) Files are properly protected. This is normal and expected.</p>
+                </details>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div class="footer-wave"></div>
+            <div class="footer-container">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-info-circle"></i> ABOUT THE PROJECT</h3>
+                    <p>DorkSearch PRO is an <strong>Open Source</strong> platform dedicated to democratizing <strong>Cybersecurity</strong> and <strong>OSINT</strong> tools.</p>
+                    <p class="quote"><i class="fas fa-quote-left"></i> Knowledge should be free and accessible. Use it responsibly. <i class="fas fa-quote-right"></i></p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">No Frameworks</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3><i class="fas fa-link"></i> QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Main Tool</a></li>
+                        <li><a href="meta-extractor.html"><i class="fas fa-chevron-right"></i> EXIF Hunter</a></li>
+                        <li><a href="emoji-crypt.html"><i class="fas fa-chevron-right"></i> Emoji Crypt</a></li>
+                        <li><a href="academy/index.html"><i class="fas fa-chevron-right"></i> Academy & Tutorials</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section contact">
+                    <h3><i class="fas fa-envelope"></i> CONTACT</h3>
+                    <p>Need help finding specific information?<br>We offer specialized search services.</p>
+                    <a href="mailto:emploi.contactch@gmail.com" class="contact-btn">
+                        <i class="fas fa-paper-plane"></i> emploi.contactch@gmail.com
+                    </a>
+                    <div class="social-links">
+                        <a href="https://github.com/mitocondria40/OSINT-dork-tool" target="_blank" rel="noopener" class="social-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://www.instagram.com/dorksearch/" target="_blank" rel="noopener" class="social-link">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 DorkSearch PRO | Developed with <i class="fas fa-heart pulse"></i> for the Cybersecurity community</p>
+                <p class="disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Disclaimer: This tool is for educational and ethical research purposes. Misuse is the user's responsibility.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <button id="scroll-top" onclick="scrollToTop()" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+    
+    <script>
+        function createComet() {
+            const container = document.body;
+            const comet = document.createElement('div');
+            comet.className = 'comet';
+
+            // Random configuration
+            const startPosPos = Math.random() * 100;
+            const duration = 4 + Math.random() * 6;
+            const size = 2 + Math.random() * 3;
+            const tailLength = 80 + Math.random() * 150;
+
+            // Apply dynamic styles
+            comet.style.left = startPosPos + '%';
+            comet.style.setProperty('--comet-duration', duration + 's');
+            comet.style.setProperty('--comet-size', size + 'px');
+            comet.style.setProperty('--tail-length', tailLength + 'px');
+
+            container.appendChild(comet);
+
+            // Remove after animation
+            setTimeout(() => {
+                comet.remove();
+            }, duration * 1000);
+        }
+
+        function spawnComets() {
+            createComet();
+            setTimeout(spawnComets, 1500 + Math.random() * 3000);
+        }
+
+        // Start animation
+        spawnComets();
+    </script>
+</body>
+</html>

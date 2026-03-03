@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <base href="/dork/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Steganography Tool | Dork</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* === VISUAL CORRECTION FOR THE INPUT TEXT AREA === */
+        /* This ensures that the green box on the left is removed 
+           complete from top to bottom in the textareas */
+        .input-wrapper {
+            align-items: stretch !important; 
+        }
+        
+        /* Adjust so that the prefix text is always centered. */
+        .prefix {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: auto; /* It adjusts to the father's height. */
+        }
+        
+        .tools-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .result-box {
+            background: #000;
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+            min-height: 60px;
+            word-break: break-all;
+            margin-top: 15px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .result-box.active {
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .result-box.error {
+            border-left-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .tools-grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="particles-bg"></div>
+
+    <div class="container">
+        <header>
+            <div class="status-bar">
+                <span class="status-item"><i class="fas fa-circle pulse-green"></i> SYSTEM: ONLINE</span>
+                <span class="status-item">MODULE: CRYPTO_OPS</span>
+                <span class="status-item">V.2.0 STABLE</span>
+            </div>
+
+            <div class="header-content">
+                <h1 class="main-title">
+                    <span class="glitch" data-text="EMOJI_CRYPT">EMOJI_<span class="highlight">CRYPT</span></span>
+                </h1>
+                
+                <p class="subtitle">
+                    <i class="fas fa-user-secret"></i> ZERO WIDTH STEGANOGRAPHY
+                    <span class="separator">●</span>
+                    <i class="fas fa-key"></i> HIDDEN PAYLOAD INJECTION
+                </p>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-home"></i> TOOL
+                </a>
+                <a href="meta-extractor.html" class="nav-item">
+                    <i class="fas fa-image"></i> EXIF_HUNTER
+                </a>
+                <a href="emoji-crypt.html" class="nav-item active">
+                    <i class="fas fa-lock"></i> EMOJI_CRYPT
+                </a>
+                <a href="academy/index.html" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i> ACADEMY
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="instructions-panel">
+                <div class="panel-header">
+                    <i class="fas fa-info-circle"></i> OPERATIONAL BRIEFING
+                </div>
+                <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <div>
+                        <h4 style="color:var(--text-bright); margin-bottom:10px;"><i class="fas fa-angle-right"></i> THE CONCEPT</h4>
+                        <p style="font-size:0.9rem; color:var(--text-dim);">Emoji Smuggling hides secret data inside public messages using <strong>Zero Width Characters</strong>. It allows communication that bypasses standard content filters.</p>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--text-bright); margin-bottom:10px;"><i class="fas fa-angle-right"></i> THE MECHANISM</h4>
+                        <p style="font-size:0.9rem; color:var(--text-dim);">We inject invisible unicode binary markers (<code>U+200B</code>, <code>U+200C</code>) between emojis. The browser renders the icons, but the system sees the hidden payload.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tools-grid-layout">
+                
+                <section class="input-section" style="margin-bottom: 0;">
+                    <div class="section-header">
+                        <div>
+                            <i class="fas fa-lock"></i>
+                            <h3>INJECT PAYLOAD (HIDE)</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label><i class="fas fa-smile"></i> VISIBLE COVER</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">Emojis:</span>
+                                <input type="text" id="encode-cover" placeholder="Ex: 😎🔥🚀 (Paste cover emojis)">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label><i class="fas fa-key"></i> SECRET MESSAGE</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">Secret:</span>
+                                <input type="text" id="encode-secret" placeholder="Ex: password123">
+                            </div>
+                        </div>
+
+                        <button class="scan-btn primary" onclick="encodeMsg()">
+                            <i class="fas fa-file-import"></i> INJECT DATA
+                        </button>
+
+                        <div class="result-box" id="encode-result">
+                            // WAITING FOR INPUT STREAM...
+                        </div>
+
+                        <button id="btn-copy-result" class="scan-btn secondary" onclick="copyResult()" style="display: none; margin-top: 10px;">
+                            <i class="fas fa-copy"></i> COPY ENCRYPTED EMOJIS
+                        </button>
+                    </div>
+                </section>
+
+                <section class="input-section" style="margin-bottom: 0;">
+                    <div class="section-header">
+                        <div>
+                            <i class="fas fa-unlock"></i>
+                            <h3>EXTRACT PAYLOAD (REVEAL)</h3>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label><i class="fas fa-search"></i> ANALYZE SUSPICIOUS TEXT</label>
+                            <div class="input-wrapper">
+                                <span class="prefix">Input:</span>
+                                <textarea id="decode-input" rows="4" placeholder="Paste suspicious text/emojis here..."></textarea>
+                            </div>
+                        </div>
+
+                        <button class="scan-btn secondary" onclick="decodeMsg()">
+                            <i class="fas fa-microscope"></i> ANALYZE & EXTRACT
+                        </button>
+
+                        <div class="result-box" id="decode-result">
+                            // WAITING FOR DATA STREAM...
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <section class="info-section">
+                <h2><i class="fas fa-book"></i> TECHNICAL DOCUMENTATION</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Zero Width Markers</h3>
+                        </div>
+                        <p>This tool transforms text into binary and replaces it with non-printing characters:</p>
+                        <div class="operators-grid">
+                            <div class="operator-item">
+                                <code>U+200B</code>
+                                <span>Zero Width Space (Binary 1)</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>U+200C</code>
+                                <span>Zero Width Non-Joiner (Binary 0)</span>
+                            </div>
+                            <div class="operator-item">
+                                <code>U+200D</code>
+                                <span>Zero Width Joiner (Separator)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card highlight">
+                        <div class="info-card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Security Implications</h3>
+                        </div>
+                        <ul class="warning-list">
+                            <li><i class="fas fa-exclamation-triangle"></i> <strong>Filter Evasion:</strong> Used to bypass social media moderation bots.</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> <strong>Data Exfiltration:</strong> Can hide sensitive data in plain sight.</li>
+                            <li><i class="fas fa-exclamation-triangle"></i> <strong>Forensics:</strong> Detect by analyzing file size vs visible length.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-wave"></div>
+            <div class="footer-container">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-info-circle"></i> ABOUT THE PROJECT</h3>
+                    <p>Dork is an <strong>Open Source</strong> platform dedicated to democratizing <strong>Cybersecurity</strong> and <strong>OSINT</strong> tools.</p>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3><i class="fas fa-link"></i> QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Main Tool</a></li>
+                        <li><a href="meta-extractor.html"><i class="fas fa-chevron-right"></i> EXIF Hunter</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 Dork | Developed with <i class="fas fa-heart pulse"></i></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function createComet() {
+            const container = document.body;
+            const comet = document.createElement('div');
+            comet.className = 'comet';
+            const duration = 4 + Math.random() * 6;
+            comet.style.left = Math.random() * 100 + '%';
+            comet.style.setProperty('--comet-duration', duration + 's');
+            comet.style.setProperty('--comet-size', (2 + Math.random() * 3) + 'px');
+            comet.style.setProperty('--tail-length', (80 + Math.random() * 150) + 'px');
+            container.appendChild(comet);
+            setTimeout(() => comet.remove(), duration * 1000);
+        }
+        function spawnComets() {
+            createComet();
+            setTimeout(spawnComets, 1500 + Math.random() * 3000);
+        }
+        spawnComets();
+    </script>
+
+    <script>
+        const zeroPad = num => '00000000'.slice(String(num).length) + num;
+        const textToBinary = text => text.split('').map(char => zeroPad(char.charCodeAt(0).toString(2))).join(' ');
+        const binaryToText = string => string.split(' ').filter(bin => bin.trim() !== '').map(char => String.fromCharCode(parseInt(char, 2))).join('');
+        
+        const zwSpace = '\u200B'; 
+        const zwNonJoiner = '\u200C'; 
+        const zwJoiner = '\u200D';
+        
+        let lastResult = "";
+
+        function encodeMsg() {
+            const cover = document.getElementById('encode-cover').value;
+            const secret = document.getElementById('encode-secret').value;
+            const resultBox = document.getElementById('encode-result');
+            const copyBtn = document.getElementById('btn-copy-result');
+            
+            if(!cover || !secret) {
+                resultBox.innerHTML = "// ERROR: MISSING INPUTS";
+                resultBox.className = "result-box error";
+                copyBtn.style.display = "none";
+                return;
+            }
+
+            const binarySecret = textToBinary(secret);
+            let hidden = '';
+            for (let char of binarySecret) {
+                if(char === '1') hidden += zwSpace;
+                else if(char === '0') hidden += zwNonJoiner;
+                else hidden += zwJoiner; 
+            }
+
+            // Segmentación correcta de emojis
+            let segments = Array.from(cover); 
+            if(window.Intl && window.Intl.Segmenter) {
+                const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+                segments = [...segmenter.segment(cover)].map(s => s.segment);
+            }
+            
+            if(segments.length === 0) {
+                 resultBox.innerHTML = "// ERROR: NO COVER EMOJI";
+                 resultBox.className = "result-box error";
+                 copyBtn.style.display = "none";
+                 return;
+            }
+            
+            lastResult = segments[0] + hidden + segments.slice(1).join('');
+            resultBox.innerText = lastResult;
+            resultBox.className = "result-box active";
+            
+            // SHOW COPY BUTTON
+            copyBtn.style.display = "flex";
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> COPY ENCRYPTED EMOJIS';
+        }
+
+        function copyResult() {
+            if(!lastResult) return;
+            navigator.clipboard.writeText(lastResult);
+            
+            const btn = document.getElementById('btn-copy-result');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+            btn.style.borderColor = "var(--primary)";
+            btn.style.color = "var(--primary)";
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.borderColor = "";
+                btn.style.color = "";
+            }, 2000);
+        }
+
+        function decodeMsg() {
+            const input = document.getElementById('decode-input').value;
+            const resultBox = document.getElementById('decode-result');
+            
+            if(!input) return;
+
+            let binaryString = '';
+            for (let char of input) {
+                if(char === zwSpace) binaryString += '1';
+                else if(char === zwNonJoiner) binaryString += '0';
+                else if(char === zwJoiner) binaryString += ' ';
+            }
+
+            if(!binaryString) {
+                resultBox.innerText = "// SCAN COMPLETE: NO HIDDEN DATA DETECTED.";
+                resultBox.className = "result-box error";
+                return;
+            }
+
+            try {
+                const text = binaryToText(binaryString);
+                resultBox.innerText = ">> DECRYPTED PAYLOAD: " + text;
+                resultBox.className = "result-box active";
+            } catch(e) {
+                resultBox.innerText = "// ERROR: CORRUPTED DATA";
+                resultBox.className = "result-box error";
+            }
+        }
+    </script>
+</body>
+</html>
+
