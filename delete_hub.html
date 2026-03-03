@@ -1,0 +1,962 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Hub - Underground Knowledge Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
+    <style>
+        * {
+            cursor: none;
+        }
+        
+        body {
+            font-family: 'Fira Code', monospace;
+            background: #0a0f0d;
+            overflow-x: hidden;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: #00ffe7;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px #00ffe7;
+        }
+        
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #00ffe7;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.7;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            color: #39ff14;
+            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            animation: matrix-fall linear infinite;
+            text-shadow: 0 0 5px #39ff14;
+        }
+        
+        @keyframes matrix-fall {
+            to {
+                top: 100%;
+            }
+        }
+        
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0066;
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffe7;
+            z-index: -2;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, -2px); }
+            20% { transform: translate(2px, 2px); }
+            30% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(2px, 2px); }
+            20% { transform: translate(-2px, -2px); }
+            30% { transform: translate(2px, -2px); }
+            40% { transform: translate(-2px, 2px); }
+        }
+        
+        .course-card {
+            background: linear-gradient(145deg, #1a1f1d, #0f1412);
+            border: 1px solid #00ffe7;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 231, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .course-card:hover::before {
+            left: 100%;
+        }
+        
+        .course-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 255, 231, 0.3);
+            border-color: #39ff14;
+        }
+        
+        .terminal-command {
+            background: #0d1b0f;
+            border: 1px solid #39ff14;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            color: #39ff14;
+            transition: all 0.3s ease;
+        }
+        
+        .terminal-command:hover {
+            background: #1a2f1d;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        
+        .neon-text {
+            color: #00ffe7;
+            text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7, 0 0 30px #00ffe7;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffe7, transparent);
+            margin: 60px 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #1a1f1d, #0f1412);
+            border: 2px solid #00ffe7;
+            margin: 15% auto;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .passcode-input {
+            background: #0d1b0f;
+            border: 1px solid #39ff14;
+            color: #39ff14;
+            padding: 10px;
+            font-family: 'Fira Code', monospace;
+            text-align: center;
+            font-size: 18px;
+            letter-spacing: 3px;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at center, rgba(0, 255, 231, 0.1) 0%, rgba(10, 15, 13, 0.9) 70%);
+        }
+        
+        .typing-animation {
+            border-right: 2px solid #00ffe7;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: #00ffe7; }
+        }
+        
+        @media (max-width: 768px) {
+            .custom-cursor, .cursor-trail {
+                display: none;
+            }
+            * {
+                cursor: auto;
+            }
+        }
+    </style>
+<style>
+    .genspark-notice-dialog {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10001;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .genspark-notice-content {
+      background-color: white;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      box-sizing: border-box;
+      padding: 10px 30px 30px 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-size: 16px;
+    }
+
+    .genspark-notice-title {
+      color: #000;
+      font-family: Arial;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%; 
+    }
+
+    .genspark-notice-list {
+      margin: 24px 0;
+      
+      color: #606366;
+      font-family: Arial;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%;
+      padding-left: 12px;
+    }
+
+    .genspark-notice-list li {
+      margin-bottom: 12px;
+      list-style-type: disc;
+    }
+
+    .genspark-notice-list li a {
+      color: #606366;
+      text-decoration: underline;
+    }
+
+    .genspark-notice-checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      gap: 10px;
+
+      color: #232425;
+
+      font-family: Arial;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    .genspark-notice-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+      
+    .genspark-notice-ok {
+      color: #232425;
+
+      text-align: center;
+      font-family: Arial;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150%; 
+
+      cursor: pointer;
+      display: flex;
+      height: 40px;
+      padding: 6px 14px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid #000;
+      box-sizing: border-box;
+      width: 100%;
+    }
+  </style></head>
+<body class="text-white">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+    
+    <!-- Matrix Background -->
+    <div class="matrix-bg" id="matrix-bg"><div class="matrix-column" style="left: 57.699422%; animation-duration: 2.186387s; animation-delay: 1.734743s;">ソ<br>ソ<br>マ<br>ヨ<br>ヲ<br>ハ<br>レ<br>ノ<br>ノ<br>ロ<br>ス<br>ク<br>ニ<br>セ<br>マ<br>ニ<br>フ<br>ケ<br>タ<br>ウ<br></div><div class="matrix-column" style="left: 87.988934%; animation-duration: 3.674843s; animation-delay: 0.840465s;">カ<br>ヘ<br>ラ<br>オ<br>ン<br>モ<br>ノ<br>タ<br>マ<br>ス<br>ソ<br>エ<br>ケ<br>タ<br>ソ<br>ツ<br>ン<br>キ<br>エ<br>フ<br></div><div class="matrix-column" style="left: 66.546742%; animation-duration: 3.411445s; animation-delay: 0.817908s;">ウ<br>ミ<br>ノ<br>ラ<br>ハ<br>ハ<br>ナ<br>サ<br>ニ<br>オ<br>ム<br>キ<br>ス<br>ク<br>エ<br>マ<br>ヘ<br>メ<br>エ<br>ク<br></div><div class="matrix-column" style="left: 21.198716%; animation-duration: 2.111335s; animation-delay: 0.328872s;">ラ<br>ニ<br>シ<br>モ<br>ワ<br>ネ<br>1<br>リ<br>キ<br>ン<br>オ<br>ソ<br>カ<br>ハ<br>ロ<br>コ<br>1<br>レ<br>ト<br>フ<br></div><div class="matrix-column" style="left: 56.548431%; animation-duration: 3.164239s; animation-delay: 1.527924s;">リ<br>テ<br>ニ<br>ユ<br>ヨ<br>シ<br>セ<br>タ<br>テ<br>ン<br>1<br>キ<br>カ<br>ミ<br>ス<br>ケ<br>ム<br>チ<br>ク<br>レ<br></div><div class="matrix-column" style="left: 47.057672%; animation-duration: 4.356154s; animation-delay: 0.92961s;">イ<br>ニ<br>イ<br>ソ<br>イ<br>ツ<br>ア<br>ワ<br>ヲ<br>ナ<br>ム<br>チ<br>ハ<br>レ<br>キ<br>コ<br>ウ<br>ホ<br>ヌ<br>ラ<br></div><div class="matrix-column" style="left: 14.370877%; animation-duration: 3.81952s; animation-delay: 1.456133s;">シ<br>ク<br>エ<br>ハ<br>ツ<br>1<br>ウ<br>ル<br>ネ<br>カ<br>チ<br>ヲ<br>レ<br>ハ<br>ロ<br>ケ<br>エ<br>チ<br>ユ<br>ヨ<br></div><div class="matrix-column" style="left: 42.054372%; animation-duration: 3.888057s; animation-delay: 0.11009s;">ワ<br>カ<br>ヲ<br>ミ<br>ヒ<br>ノ<br>ウ<br>テ<br>イ<br>ウ<br>メ<br>サ<br>チ<br>シ<br>ム<br>マ<br>ヒ<br>ニ<br>ツ<br>ア<br></div><div class="matrix-column" style="left: 96.924967%; animation-duration: 3.215016s; animation-delay: 0.999865s;">キ<br>ソ<br>リ<br>キ<br>メ<br>レ<br>レ<br>ヤ<br>モ<br>ソ<br>マ<br>ユ<br>ツ<br>ユ<br>イ<br>ノ<br>シ<br>ヘ<br>キ<br>イ<br></div><div class="matrix-column" style="left: 70.057792%; animation-duration: 4.465117s; animation-delay: 1.462532s;">マ<br>ヌ<br>ミ<br>コ<br>ツ<br>サ<br>チ<br>ス<br>ネ<br>ト<br>リ<br>ヘ<br>ソ<br>ユ<br>ネ<br>サ<br>ク<br>マ<br>ニ<br>ル<br></div><div class="matrix-column" style="left: 66.284324%; animation-duration: 4.273932s; animation-delay: 1.020829s;">0<br>ミ<br>ル<br>ヤ<br>ル<br>ヘ<br>ル<br>イ<br>フ<br>キ<br>モ<br>サ<br>ス<br>ヒ<br>ラ<br>ム<br>ワ<br>ネ<br>セ<br>テ<br></div><div class="matrix-column" style="left: 35.238024%; animation-duration: 3.5035s; animation-delay: 1.625818s;">ヌ<br>コ<br>ム<br>セ<br>エ<br>ヌ<br>テ<br>テ<br>ル<br>ソ<br>ス<br>オ<br>エ<br>ホ<br>エ<br>ヌ<br>オ<br>ア<br>ヘ<br>メ<br></div><div class="matrix-column" style="left: 52.748115%; animation-duration: 2.255889s; animation-delay: 0.355621s;">ヒ<br>イ<br>ン<br>ヌ<br>ヤ<br>ナ<br>マ<br>セ<br>テ<br>マ<br>ヨ<br>ス<br>ソ<br>チ<br>ヲ<br>ナ<br>モ<br>ハ<br>キ<br>セ<br></div><div class="matrix-column" style="left: 18.010449%; animation-duration: 2.111231s; animation-delay: 1.526667s;">ミ<br>ナ<br>リ<br>ヨ<br>モ<br>ン<br>ト<br>0<br>1<br>ト<br>ワ<br>ナ<br>1<br>モ<br>ワ<br>サ<br>ウ<br>ヌ<br>カ<br>エ<br></div><div class="matrix-column" style="left: 21.390705%; animation-duration: 2.63016s; animation-delay: 0.286828s;">チ<br>タ<br>ソ<br>ヌ<br>キ<br>セ<br>タ<br>1<br>ヲ<br>チ<br>ル<br>イ<br>サ<br>イ<br>エ<br>ト<br>メ<br>ホ<br>ツ<br>ワ<br></div><div class="matrix-column" style="left: 41.6973%; animation-duration: 3.335776s; animation-delay: 0.264289s;">ス<br>セ<br>コ<br>カ<br>イ<br>ナ<br>ム<br>ヤ<br>ツ<br>サ<br>ワ<br>エ<br>シ<br>エ<br>ソ<br>タ<br>1<br>ム<br>カ<br>ノ<br></div><div class="matrix-column" style="left: 44.406613%; animation-duration: 2.721636s; animation-delay: 1.802463s;">ク<br>ツ<br>ム<br>ヨ<br>ア<br>サ<br>ワ<br>ハ<br>ン<br>ラ<br>エ<br>ワ<br>ヲ<br>ウ<br>キ<br>サ<br>オ<br>イ<br>ネ<br>ノ<br></div><div class="matrix-column" style="left: 68.220379%; animation-duration: 3.081925s; animation-delay: 1.52002s;">ウ<br>1<br>モ<br>シ<br>メ<br>タ<br>ア<br>カ<br>オ<br>ハ<br>セ<br>ン<br>メ<br>レ<br>ヒ<br>タ<br>ニ<br>ニ<br>ワ<br>ロ<br></div><div class="matrix-column" style="left: 60.950604%; animation-duration: 3.623291s; animation-delay: 0.576313s;">ナ<br>ウ<br>レ<br>ノ<br>ニ<br>ヨ<br>ル<br>ル<br>ユ<br>ネ<br>ク<br>ノ<br>ワ<br>ア<br>セ<br>ネ<br>リ<br>ツ<br>セ<br>ヘ<br></div><div class="matrix-column" style="left: 90.328963%; animation-duration: 3.82199s; animation-delay: 0.642176s;">ノ<br>レ<br>コ<br>ル<br>チ<br>エ<br>ン<br>カ<br>ア<br>ノ<br>タ<br>キ<br>レ<br>ク<br>ノ<br>ノ<br>ミ<br>リ<br>フ<br>リ<br></div><div class="matrix-column" style="left: 99.481515%; animation-duration: 4.090765s; animation-delay: 1.33161s;">サ<br>ム<br>ユ<br>ヌ<br>ソ<br>マ<br>ヌ<br>リ<br>マ<br>タ<br>ム<br>ノ<br>ヨ<br>ヘ<br>セ<br>ヒ<br>ネ<br>ラ<br>ロ<br>フ<br></div><div class="matrix-column" style="left: 48.052904%; animation-duration: 3.83466s; animation-delay: 0.659136s;">モ<br>ニ<br>タ<br>オ<br>ノ<br>レ<br>ソ<br>チ<br>1<br>ト<br>0<br>ヘ<br>ニ<br>ヲ<br>キ<br>ヌ<br>サ<br>イ<br>シ<br>ツ<br></div><div class="matrix-column" style="left: 91.2446%; animation-duration: 2.698586s; animation-delay: 1.19478s;">ヨ<br>メ<br>ネ<br>リ<br>ヘ<br>レ<br>ツ<br>ワ<br>ツ<br>ヒ<br>メ<br>キ<br>ケ<br>モ<br>ハ<br>ア<br>ニ<br>ツ<br>ン<br>キ<br></div><div class="matrix-column" style="left: 84.029893%; animation-duration: 3.519116s; animation-delay: 0.678451s;">マ<br>ユ<br>ヤ<br>ツ<br>チ<br>ホ<br>ツ<br>テ<br>ヒ<br>ヨ<br>ネ<br>ク<br>ロ<br>ニ<br>テ<br>ナ<br>ス<br>ヤ<br>イ<br>ホ<br></div><div class="matrix-column" style="left: 14.098265%; animation-duration: 2.037918s; animation-delay: 1.160114s;">ナ<br>キ<br>フ<br>チ<br>モ<br>マ<br>ユ<br>ソ<br>フ<br>ヨ<br>ヨ<br>エ<br>マ<br>ト<br>ケ<br>テ<br>イ<br>ユ<br>ヒ<br>ヌ<br></div><div class="matrix-column" style="left: 60.828592%; animation-duration: 3.9398s; animation-delay: 0.904808s;">ラ<br>サ<br>エ<br>サ<br>ユ<br>シ<br>イ<br>リ<br>ル<br>カ<br>カ<br>ア<br>ヌ<br>ク<br>ワ<br>ア<br>ニ<br>ヤ<br>ヘ<br>メ<br></div><div class="matrix-column" style="left: 39.291786%; animation-duration: 4.616319s; animation-delay: 1.545948s;">オ<br>フ<br>ン<br>コ<br>ム<br>ス<br>ト<br>ム<br>ム<br>1<br>オ<br>タ<br>マ<br>ロ<br>ヲ<br>ヨ<br>マ<br>ア<br>ホ<br>ク<br></div><div class="matrix-column" style="left: 47.734416%; animation-duration: 4.6109s; animation-delay: 0.788776s;">モ<br>ソ<br>サ<br>ニ<br>ウ<br>タ<br>ス<br>セ<br>メ<br>ン<br>マ<br>1<br>コ<br>ユ<br>ワ<br>ワ<br>ハ<br>ナ<br>ル<br>ユ<br></div><div class="matrix-column" style="left: 80.831945%; animation-duration: 3.165443s; animation-delay: 1.302467s;">イ<br>ヲ<br>ヤ<br>シ<br>1<br>ノ<br>ネ<br>ヨ<br>ナ<br>ク<br>イ<br>タ<br>イ<br>ラ<br>ウ<br>シ<br>ヌ<br>ナ<br>ネ<br>ス<br></div><div class="matrix-column" style="left: 56.146675%; animation-duration: 3.802547s; animation-delay: 1.442168s;">テ<br>フ<br>ユ<br>フ<br>ス<br>メ<br>ン<br>オ<br>ヒ<br>ナ<br>ヒ<br>リ<br>ヲ<br>ケ<br>チ<br>0<br>オ<br>ヲ<br>ウ<br>ム<br></div><div class="matrix-column" style="left: 48.263483%; animation-duration: 2.094432s; animation-delay: 1.941786s;">ワ<br>フ<br>ミ<br>テ<br>ケ<br>セ<br>ヨ<br>ナ<br>タ<br>チ<br>マ<br>タ<br>フ<br>ソ<br>ヘ<br>モ<br>カ<br>レ<br>ア<br>エ<br></div><div class="matrix-column" style="left: 39.566351%; animation-duration: 2.357276s; animation-delay: 0.214719s;">ナ<br>ホ<br>テ<br>ネ<br>シ<br>ニ<br>モ<br>0<br>メ<br>ノ<br>ケ<br>ユ<br>チ<br>ハ<br>ヘ<br>チ<br>ク<br>メ<br>リ<br>ウ<br></div><div class="matrix-column" style="left: 8.393508%; animation-duration: 3.933398s; animation-delay: 0.343257s;">ロ<br>カ<br>ア<br>ヌ<br>ニ<br>ヤ<br>ヒ<br>イ<br>タ<br>ノ<br>1<br>ク<br>ケ<br>ノ<br>ト<br>ホ<br>ヤ<br>テ<br>オ<br>セ<br></div><div class="matrix-column" style="left: 45.889209%; animation-duration: 4.570992s; animation-delay: 1.554765s;">モ<br>ハ<br>ル<br>ハ<br>ケ<br>タ<br>モ<br>モ<br>ト<br>セ<br>0<br>0<br>1<br>ワ<br>モ<br>ル<br>0<br>ミ<br>ワ<br>ツ<br></div><div class="matrix-column" style="left: 36.362637%; animation-duration: 4.257217s; animation-delay: 1.69768s;">セ<br>1<br>コ<br>ナ<br>エ<br>ツ<br>ア<br>コ<br>0<br>ケ<br>ニ<br>ヨ<br>ツ<br>ク<br>ハ<br>ヒ<br>オ<br>ハ<br>マ<br>ム<br></div><div class="matrix-column" style="left: 15.257986%; animation-duration: 2.271773s; animation-delay: 0.576603s;">レ<br>ス<br>エ<br>1<br>ヒ<br>ラ<br>ケ<br>フ<br>ツ<br>ラ<br>ソ<br>ン<br>ヤ<br>ハ<br>ム<br>ク<br>タ<br>エ<br>チ<br>テ<br></div><div class="matrix-column" style="left: 55.639425%; animation-duration: 2.023109s; animation-delay: 0.146803s;">ツ<br>シ<br>ロ<br>1<br>ス<br>シ<br>オ<br>タ<br>ヌ<br>1<br>フ<br>ヘ<br>ン<br>テ<br>ヨ<br>レ<br>ソ<br>ユ<br>0<br>テ<br></div><div class="matrix-column" style="left: 11.590435%; animation-duration: 4.711062s; animation-delay: 1.328328s;">ワ<br>メ<br>マ<br>ヌ<br>ホ<br>サ<br>リ<br>ロ<br>ン<br>ウ<br>1<br>ヒ<br>ン<br>フ<br>マ<br>0<br>カ<br>ツ<br>カ<br>マ<br></div><div class="matrix-column" style="left: 62.414265%; animation-duration: 4.230299s; animation-delay: 0.320888s;">テ<br>ミ<br>シ<br>ム<br>ヲ<br>ハ<br>ハ<br>ワ<br>テ<br>ニ<br>ホ<br>コ<br>ヌ<br>ホ<br>サ<br>ハ<br>ア<br>ム<br>ナ<br>サ<br></div><div class="matrix-column" style="left: 13.746341%; animation-duration: 3.936931s; animation-delay: 1.56289s;">チ<br>チ<br>ル<br>ス<br>ユ<br>ノ<br>イ<br>ラ<br>ヲ<br>ネ<br>イ<br>ヲ<br>ヌ<br>ヘ<br>ロ<br>ヘ<br>イ<br>0<br>カ<br>オ<br></div><div class="matrix-column" style="left: 15.81894%; animation-duration: 3.085358s; animation-delay: 1.107843s;">ツ<br>メ<br>ア<br>ロ<br>ス<br>ノ<br>ス<br>チ<br>ヨ<br>ヨ<br>1<br>キ<br>ミ<br>ハ<br>ハ<br>ハ<br>マ<br>ワ<br>ミ<br>ツ<br></div><div class="matrix-column" style="left: 28.796199%; animation-duration: 2.802076s; animation-delay: 1.512961s;">カ<br>モ<br>メ<br>ツ<br>モ<br>ニ<br>ン<br>コ<br>ケ<br>1<br>0<br>マ<br>フ<br>ケ<br>ミ<br>リ<br>ヒ<br>ノ<br>ナ<br>カ<br></div><div class="matrix-column" style="left: 89.287883%; animation-duration: 4.800398s; animation-delay: 1.716871s;">1<br>ワ<br>ナ<br>ロ<br>ホ<br>メ<br>リ<br>ン<br>ム<br>ロ<br>エ<br>タ<br>ト<br>ヒ<br>ア<br>ラ<br>ル<br>ソ<br>ウ<br>ラ<br></div><div class="matrix-column" style="left: 43.701999%; animation-duration: 3.403149s; animation-delay: 0.159832s;">ス<br>ニ<br>マ<br>チ<br>モ<br>カ<br>エ<br>ラ<br>ヘ<br>カ<br>ア<br>レ<br>チ<br>ヨ<br>ヒ<br>ス<br>リ<br>ホ<br>ヘ<br>ン<br></div><div class="matrix-column" style="left: 36.517395%; animation-duration: 4.073741s; animation-delay: 0.814471s;">ミ<br>メ<br>ソ<br>0<br>サ<br>サ<br>0<br>ヨ<br>ハ<br>カ<br>フ<br>コ<br>シ<br>テ<br>チ<br>ナ<br>モ<br>サ<br>ケ<br>フ<br></div><div class="matrix-column" style="left: 94.868796%; animation-duration: 4.318012s; animation-delay: 0.750086s;">ク<br>チ<br>ム<br>ハ<br>ヲ<br>フ<br>コ<br>ユ<br>エ<br>ウ<br>リ<br>ハ<br>ス<br>ハ<br>ラ<br>1<br>ラ<br>シ<br>マ<br>オ<br></div><div class="matrix-column" style="left: 29.00745%; animation-duration: 4.002246s; animation-delay: 0.257865s;">1<br>ハ<br>ユ<br>ス<br>ム<br>リ<br>カ<br>ラ<br>ヒ<br>ミ<br>ウ<br>コ<br>ワ<br>エ<br>サ<br>1<br>ル<br>ソ<br>キ<br>ユ<br></div><div class="matrix-column" style="left: 60.751799%; animation-duration: 3.906471s; animation-delay: 1.593809s;">ツ<br>1<br>タ<br>ア<br>ネ<br>ツ<br>ニ<br>コ<br>ル<br>ア<br>イ<br>ヨ<br>ヨ<br>ニ<br>ア<br>コ<br>ニ<br>ア<br>ク<br>0<br></div><div class="matrix-column" style="left: 88.194926%; animation-duration: 4.970799s; animation-delay: 1.114138s;">ム<br>ト<br>テ<br>ハ<br>シ<br>ヒ<br>シ<br>ヤ<br>ワ<br>キ<br>ニ<br>ヘ<br>カ<br>ヲ<br>モ<br>ク<br>ハ<br>リ<br>フ<br>テ<br></div><div class="matrix-column" style="left: 96.114417%; animation-duration: 2.489247s; animation-delay: 0.299393s;">オ<br>コ<br>ヒ<br>ケ<br>メ<br>ヌ<br>リ<br>テ<br>ヲ<br>セ<br>ツ<br>レ<br>ネ<br>ミ<br>ミ<br>ト<br>イ<br>ネ<br>シ<br>チ<br></div></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold font-mono">
+                    <span class="neon-text glitch" data-text="DELETE_HUB" style="animation: 2s infinite glitch;">DELETE_HUB</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-green-400 transition-colors">Home</a>
+                    <a href="#courses" class="hover:text-green-400 transition-colors">Courses</a>
+                    <a href="#vault" class="hover:text-green-400 transition-colors">Vault Access</a>
+                    <a href="#follow" class="hover:text-green-400 transition-colors">Follow Me</a>
+                    <a href="#about" class="hover:text-green-400 transition-colors">About</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-green-400">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-16 left-0 right-0 bg-black bg-opacity-95 z-40 hidden">
+        <div class="px-6 py-4 space-y-4">
+            <a href="#home" class="block hover:text-green-400 transition-colors">Home</a>
+            <a href="#courses" class="block hover:text-green-400 transition-colors">Courses</a>
+            <a href="#vault" class="block hover:text-green-400 transition-colors">Vault Access</a>
+            <a href="#follow" class="block hover:text-green-400 transition-colors">Follow Me</a>
+            <a href="#about" class="block hover:text-green-400 transition-colors">About</a>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center hero-bg pt-20">
+        <div class="text-center px-6">
+            <h1 class="text-4xl md:text-7xl font-bold mb-6 font-mono">
+                <span class="glitch neon-text" data-text="UNDERGROUND" style="animation: 2s infinite glitch;">UNDERGROUND</span><br>
+                <span class="text-red-500">KNOWLEDGE</span><br>
+                <span class="text-green-400">HUB</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 font-mono typing-animation" id="typing-text">Elite courses for reality hackers.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <button onclick="scrollToSection('courses')" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 px-8 py-3 rounded font-mono font-bold transition-all transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>ACCESS COURSES
+                </button>
+                <button onclick="scrollToSection('vault')" class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 px-8 py-3 rounded font-mono font-bold transition-all transform hover:scale-105">
+                    <i class="fas fa-download mr-2"></i>ENTER VAULT
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Embedded Web Courses -->
+    <section id="courses" class="py-20 px-6">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 font-mono">
+                <span class="neon-text glitch" data-text="📡 EMBEDDED WEB COURSES" style="animation: 2s infinite glitch;">📡 EMBEDDED WEB COURSES</span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Grey Hat Hacking -->
+                <div class="course-card p-6 rounded-lg" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-green-400 text-2xl mb-4">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-mono">Grey Hat Hacking</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Advanced ethical hacking techniques and methodologies</p>
+                    <a href="https://grey-hat-hacking-course.vercel.app" target="_blank" class="inline-block bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-mono text-sm transition-all">
+                        <i class="fas fa-external-link-alt mr-2"></i>LAUNCH COURSE
+                    </a>
+                </div>
+                
+                <!-- Python for Traders -->
+                <div class="course-card p-6 rounded-lg" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-yellow-400 text-2xl mb-4">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-mono">Python for Traders</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Algorithmic trading and financial analysis with Python</p>
+                    <a href="https://python-for-traders-masterclass.vercel.app" target="_blank" class="inline-block bg-yellow-600 hover:bg-yellow-500 px-4 py-2 rounded font-mono text-sm transition-all">
+                        <i class="fas fa-external-link-alt mr-2"></i>LAUNCH COURSE
+                    </a>
+                </div>
+                
+                <!-- Kali Linux (Protected) -->
+                <div class="course-card p-6 rounded-lg" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-red-400 text-2xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-mono">Kali Linux 🛡️</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Protected course - Passcode required</p>
+                    <button onclick="openKaliModal()" class="inline-block bg-red-600 hover:bg-red-500 px-4 py-2 rounded font-mono text-sm transition-all">
+                        <i class="fas fa-lock mr-2"></i>ENTER PASSCODE
+                    </button>
+                </div>
+                
+                <!-- Red Hat Hacking -->
+                <div class="course-card p-6 rounded-lg" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-red-500 text-2xl mb-4">
+                        <i class="fab fa-redhat"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-mono">Red Hat Hacking</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Advanced Red Team operations and penetration testing</p>
+                    <a href="https://red-hat-hacking-course.vercel.app" target="_blank" class="inline-block bg-red-700 hover:bg-red-600 px-4 py-2 rounded font-mono text-sm transition-all">
+                        <i class="fas fa-external-link-alt mr-2"></i>LAUNCH COURSE
+                    </a>
+                </div>
+                
+                <!-- Burpsuite Bounty Pro -->
+                <div class="course-card p-6 rounded-lg" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-orange-400 text-2xl mb-4">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 font-mono">Burpsuite Bounty Pro</h3>
+                    <p class="text-gray-400 mb-4 text-sm">Professional bug bounty hunting with Burp Suite</p>
+                    <a href="https://burp-suite-bounty-ccsr1nbft-crackshash-mods-projects.vercel.app" target="_blank" class="inline-block bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded font-mono text-sm transition-all">
+                        <i class="fas fa-external-link-alt mr-2"></i>LAUNCH COURSE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Vault Access -->
+    <section id="vault" class="py-20 px-6">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 font-mono">
+                <span class="neon-text glitch" data-text="📦 VAULT ACCESS" style="animation: 2s infinite glitch;">📦 VAULT ACCESS</span>
+            </h2>
+            
+            <!-- Terminal Interface -->
+            <div class="bg-black border-2 border-green-400 rounded-lg p-6 mb-12 max-w-4xl mx-auto">
+                <div class="flex items-center mb-4">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <div class="ml-4 text-green-400 font-mono">delete_hub@vault:~$</div>
+                </div>
+                
+                <!-- Android & iPhone Software Repair -->
+                <div class="terminal-command mb-4" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <div class="text-cyan-400 font-bold mb-2">👨‍💻 Android &amp; iPhone Software Repair (Live Demo)</div>
+                    <div class="text-gray-300 text-sm mb-3">Complete mobile device repair course with live demonstrations</div>
+                    <div class="flex flex-col md:flex-row gap-2">
+                        <a href="https://www.mediafire.com/file/1x07ppu103hmb9y/[Freeeducationweb.com]+Android+and+iPhone+Software+Repair+with+a+Live+Demo.part1.rar/file" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm transition-all">
+                            <i class="fas fa-download mr-2"></i>wget part1.rar
+                        </a>
+                        <a href="https://www.mediafire.com/file/5l4b006xqz6ltsd/[Freeeducationweb.com]+Android+and+iPhone+Software+Repair+with+a+Live+Demo.part2.rar/file" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm transition-all">
+                            <i class="fas fa-download mr-2"></i>wget part2.rar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Individual Courses Grid -->
+            <h3 class="text-2xl font-bold text-center mb-8 font-mono text-green-400">🧨 Individual Course Archives</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Termux Hacking</h4>
+                    <p class="text-gray-400 text-sm mb-3">Mobile penetration testing with Termux</p>
+                    <a href="https://drive.google.com/drive/folders/10GOHkhtl67JdV88slAMTEsmtmVEC89Nt" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la termux/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Typography &amp; Calligraphy</h4>
+                    <p class="text-gray-400 text-sm mb-3">Professional design and typography skills</p>
+                    <a href="https://drive.google.com/drive/folders/1QreRShsa09p-r2f5a7ozwpoX6kNIOsEi" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la typography/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">T-Shirt Design Masterclass</h4>
+                    <p class="text-gray-400 text-sm mb-3">Complete guide to t-shirt design and sales</p>
+                    <a href="https://drive.google.com/drive/folders/1iJHRnelAKolsA6is5LvZ8r56q_dDHrap" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la tshirt_design/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Android Developer (14 Apps)</h4>
+                    <p class="text-gray-400 text-sm mb-3">Build 14 complete Android applications</p>
+                    <a href="https://drive.google.com/drive/folders/1BnqNr49J_dLbS37gUwJGo70Yv-ZPSXum" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la android_dev/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Web Developer Bootcamp</h4>
+                    <p class="text-gray-400 text-sm mb-3">Full-stack web development course</p>
+                    <a href="https://drive.google.com/drive/folders/1i5FpcrmRcH3ophiicr_C9h9in8RZILm-" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la web_dev/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Web Designer (23 Projects)</h4>
+                    <p class="text-gray-400 text-sm mb-3">23 complete web design projects</p>
+                    <a href="https://drive.google.com/drive/folders/1fFs_27uPCChP4Mj049CMqZvRg9-r63XP" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la web_design/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">C Programming</h4>
+                    <p class="text-gray-400 text-sm mb-3">Complete C programming fundamentals</p>
+                    <a href="https://drive.google.com/drive/folders/197LMnqJugfsVLbjGKm2CzSn_EZSjKUfW" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la c_programming/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">WordPress E-Commerce</h4>
+                    <p class="text-gray-400 text-sm mb-3">Build complete e-commerce sites</p>
+                    <a href="https://drive.google.com/drive/folders/12qujiKl-6H27i0LEh4rjy2gCwUdLrdEK" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la wordpress/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">Wireshark</h4>
+                    <p class="text-gray-400 text-sm mb-3">Network analysis and packet capture</p>
+                    <a href="https://drive.google.com/drive/folders/1pu1fhfZhv0GNO227Br-NofQ2r7ob0gZA" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la wireshark/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">WiFi Hacking with Kali</h4>
+                    <p class="text-gray-400 text-sm mb-3">Wireless network penetration testing</p>
+                    <a href="https://drive.google.com/drive/folders/0Bwl2hpDfvDN1RFV5VE1TMVQ0Vms?resourcekey=0-rQRPGupelyiYqsX81LwCIw" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la wifi_hacking/
+                    </a>
+                </div>
+                
+                <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                    <h4 class="font-bold text-cyan-400 mb-2">PowerPoint Templates</h4>
+                    <p class="text-gray-400 text-sm mb-3">Professional presentation templates</p>
+                    <a href="https://drive.google.com/drive/folders/0Bwl2hpDfvDN1SF9pWmFLaVJoVkE?resourcekey=0-oKTKXPc7oHTwRATXQx9_YQ" target="_blank" class="text-green-400 hover:text-green-300">
+                        <i class="fas fa-folder mr-2"></i>ls -la templates/
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Newly Added Drops -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold text-center mb-8 font-mono text-red-400">🔥 NEWLY ADDED DROPS</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                        <h4 class="font-bold text-red-400 mb-2">Android Hacking (Direct Download)</h4>
+                        <p class="text-gray-400 text-sm mb-3">Complete Android penetration testing course</p>
+                        <a href="https://drive.google.com/uc?export=download&amp;confirm=sJEE&amp;id=15jCBHTFp0h9V8d10wBY4ntWwAZmk7Rvm" target="_blank" class="text-red-400 hover:text-red-300">
+                            <i class="fas fa-download mr-2"></i>curl -O android_hack.zip
+                        </a>
+                    </div>
+                    
+                    <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                        <h4 class="font-bold text-red-400 mb-2">Recon for Bug Bounty</h4>
+                        <p class="text-gray-400 text-sm mb-3">Advanced reconnaissance techniques</p>
+                        <a href="https://mega.nz/folder/UewD3SpA#9wrVrLz-DEUS9MDRvr96jQ" target="_blank" class="text-red-400 hover:text-red-300">
+                            <i class="fas fa-cloud-download-alt mr-2"></i>mega-get recon/
+                        </a>
+                    </div>
+                    
+                    <div class="terminal-command" style="opacity: 1; transform: translateY(0px); transition: 0.6s;">
+                        <h4 class="font-bold text-red-400 mb-2">Kashif Majeed Course Pack</h4>
+                        <p class="text-gray-400 text-sm mb-3">Complete course collection</p>
+                        <div class="flex flex-col gap-2">
+                            <a href="https://drive.google.com/drive/folders/1JFpCe8V4AvKpxtVEJ99bHY0J2GmyJCsT?usp=sharing" target="_blank" class="text-red-400 hover:text-red-300">
+                                <i class="fab fa-google-drive mr-2"></i>gdrive sync kashif/
+                            </a>
+                            <a href="https://mega.nz/folder/fzA2SbwI#TtqmSqQY49OkBmzZaBWVbw" target="_blank" class="text-red-400 hover:text-red-300">
+                                <i class="fas fa-cloud mr-2"></i>mega-sync kashif/
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Follow Me Section -->
+    <section id="follow" class="py-20 px-6">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12 font-mono">
+                <span class="neon-text glitch" data-text="📲 FOLLOW THE COLLECTIVE" style="animation: 2s infinite glitch;">📲 FOLLOW THE COLLECTIVE</span>
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <a href="https://whatsapp.com/" target="_blank" class="social-icon text-green-500 hover:text-green-400">
+                    <i class="fab fa-whatsapp text-4xl mb-2"></i>
+                    <div class="font-mono text-sm">WhatsApp</div>
+                </a>
+                <a href="https://youtube.com/" target="_blank" class="social-icon text-red-500 hover:text-red-400">
+                    <i class="fab fa-youtube text-4xl mb-2"></i>
+                    <div class="font-mono text-sm">YouTube</div>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="social-icon text-pink-500 hover:text-pink-400">
+                    <i class="fab fa-instagram text-4xl mb-2"></i>
+                    <div class="font-mono text-sm">Main IG</div>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="social-icon text-purple-500 hover:text-purple-400">
+                    <i class="fab fa-instagram text-4xl mb-2"></i>
+                    <div class="font-mono text-sm">Trading IG</div>
+                </a>
+                <a href="https://ig.me/" target="_blank" class="social-icon text-cyan-500 hover:text-cyan-400">
+                    <i class="fas fa-broadcast-tower text-4xl mb-2"></i>
+                    <div class="font-mono text-sm">Broadcast</div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-bold mb-12 font-mono">
+                <span class="neon-text glitch" data-text="ABOUT DELETE_HUB" style="animation: 2s infinite glitch;">ABOUT DELETE_HUB</span>
+            </h2>
+            <div class="bg-gradient-to-r from-gray-900 to-black p-8 rounded-lg border border-cyan-500">
+                <p class="text-xl leading-relaxed font-mono">
+                    "We don't sell knowledge. delete_hub Mod is built for those who hack reality — from cybersecurity students to creative hustlers. 100% free. No login. No gatekeeping. Just pure skill upgrades."
+                </p>
+                <div class="mt-8 grid md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl text-green-400 mb-2">
+                            <i class="fas fa-unlock"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">100% FREE</h3>
+                        <p class="text-gray-400 text-sm">No hidden costs, no subscriptions</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl text-cyan-400 mb-2">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">NO LOGIN</h3>
+                        <p class="text-gray-400 text-sm">Anonymous access, privacy first</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl text-red-400 mb-2">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3 class="font-bold mb-2">ELITE CONTENT</h3>
+                        <p class="text-gray-400 text-sm">Underground-level courses</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <div class="text-2xl font-bold font-mono mb-4">
+                <span class="neon-text">DELETE_HUB</span>
+            </div>
+            <p class="text-gray-400 font-mono">Hacking Reality, One Course at a Time</p>
+            <div class="mt-4 text-xs text-gray-600">
+                <p>© 2024 Delete Hub. All courses are for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Kali Linux Passcode Modal -->
+    <div id="kali-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold mb-4 text-cyan-400 font-mono">🛡️ RESTRICTED ACCESS</h3>
+            <p class="mb-6 text-gray-300">Enter the passcode to access Kali Linux course</p>
+            <input type="password" id="passcode-input" class="passcode-input w-full mb-4" placeholder="Enter passcode" maxlength="5">
+            <div class="flex gap-4 justify-center">
+                <button onclick="verifyPasscode()" class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded font-mono">
+                    <i class="fas fa-key mr-2"></i>VERIFY
+                </button>
+                <button onclick="closeKaliModal()" class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded font-mono">
+                    <i class="fas fa-times mr-2"></i>CANCEL
+                </button>
+            </div>
+            <div id="passcode-error" class="text-red-400 mt-4 hidden">Access Denied: Invalid Passcode</div>
+        </div>
+    </div>
+    
+    <script>
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        const trails = [];
+        let mouseX = 0, mouseY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursor.style.left = mouseX - 10 + 'px';
+            cursor.style.top = mouseY - 10 + 'px';
+            
+            // Create trail
+            if (window.innerWidth > 768) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = mouseX - 3 + 'px';
+                trail.style.top = mouseY - 3 + 'px';
+                document.body.appendChild(trail);
+                trails.push(trail);
+                
+                setTimeout(() => {
+                    trail.style.opacity = '0';
+                    setTimeout(() => {
+                        if (trail.parentNode) {
+                            trail.parentNode.removeChild(trail);
+                        }
+                        trails.splice(trails.indexOf(trail), 1);
+                    }, 300);
+                }, 100);
+                
+                if (trails.length > 20) {
+                    const oldTrail = trails.shift();
+                    if (oldTrail.parentNode) {
+                        oldTrail.parentNode.removeChild(oldTrail);
+                    }
+                }
+            }
+        });
+        
+        // Matrix background animation
+        function createMatrixRain() {
+            const matrixBg = document.getElementById('matrix-bg');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 50; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                column.style.animationDelay = Math.random() * 2 + 's';
+                
+                let text = '';
+                for (let j = 0; j < 20; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                column.innerHTML = text;
+                
+                matrixBg.appendChild(column);
+            }
+        }
+        
+        // Typing animation
+        const messages = [
+            "We don't sell knowledge. We leak it.",
+            "100% Free. No Login. No Gatekeeping.",
+            "Elite courses for reality hackers.",
+            "Join the underground knowledge revolution."
+        ];
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeWriter() {
+            const typingElement = document.getElementById('typing-text');
+            const currentMessage = messages[messageIndex];
+            
+            if (!isDeleting) {
+                typingElement.textContent = currentMessage.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === currentMessage.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 2000);
+                    return;
+                }
+            } else {
+                typingElement.textContent = currentMessage.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                }
+            }
+            
+            setTimeout(typeWriter, isDeleting ? 50 : 100);
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+            mobileMenu.classList.add('hidden');
+        }
+        
+        // Navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+        
+        // Kali Linux modal functions
+        function openKaliModal() {
+            document.getElementById('kali-modal').style.display = 'block';
+            document.getElementById('passcode-input').focus();
+        }
+        
+        function closeKaliModal() {
+            document.getElementById('kali-modal').style.display = 'none';
+            document.getElementById('passcode-input').value = '';
+            document.getElementById('passcode-error').classList.add('hidden');
+        }
+        
+        function verifyPasscode() {
+            const passcode = document.getElementById('passcode-input').value;
+            const errorDiv = document.getElementById('passcode-error');
+            
+            if (passcode === '35612') {
+                window.open('https://kali-linux-course.vercel.app', '_blank');
+                closeKaliModal();
+            } else {
+                errorDiv.classList.remove('hidden');
+                document.getElementById('passcode-input').value = '';
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        }
+        
+        // Enter key for passcode
+        document.getElementById('passcode-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPasscode();
+            }
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('kali-modal');
+            if (e.target === modal) {
+                closeKaliModal();
+            }
+        });
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            createMatrixRain();
+            typeWriter();
+            
+            // Add glitch effect to random elements
+            setInterval(() => {
+                const glitchElements = document.querySelectorAll('.glitch');
+                glitchElements.forEach(el => {
+                    if (Math.random() > 0.95) {
+                        el.style.animation = 'none';
+                        setTimeout(() => {
+                            el.style.animation = 'glitch 2s infinite';
+                        }, 100);
+                    }
+                });
+            }, 1000);
+        });
+        
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe course cards
+        document.querySelectorAll('.course-card, .terminal-command').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+
+
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDmyvPEhrybYZNoSv001MK0Fuxhh6Oa%2Fzl0MddQe5vR1rOgtqkP2jqLwIRYaTfi9MvE02e1QET0kobmxMtdZqbAzBtWrssmTyt2pUNZuErj2zUSZrKJvKdpChwSFwLEKKTyEprmnF94PMGg2hm6YrWdco9O8f3pQfFmrDDqPxnqGfV4fa3rl1tVaMqHHOKMYmpJq6KtMw0jtdToMY02JokpE9vgY7ir98aoPy7K47n9vSoEyfaDY74kFo%2FE%2BL5S%2BW22rl%2BoSYeFPDggj34wS8XSi%2BJk%2B4SqDje782eI%2BCJIFfqJdFvf4Fyn2xMB%2FoK0mgnDcLz%2BaINkqwT3dQle0vKjV4WgGYB3%2FrMx0inqS8jqsyvT0cA2M8DTvjX0ucp6o3lFllQWT4is5%2FXODrghZB7j%2F4Wn51481V9Yn1u1F4Ea5IjVm6RBERCZVmqT2AFQQVUrordE31LjDnsq5RkgIU0J6FX9ZdAu0LVIl7Ul41%2F7%2BNhri4D%2Fxp9fvAj0MlfvakbA%3D%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDmyvPEhrybYZNoSv001MK0Fuxhh6Oa/zl0MddQe5vR1rOgtqkP2jqLwIRYaTfi9MvE02e1QET0kobmxMtdZqbAzBtWrssmTyt2pUNZuErj2zUSZrKJvKdpChwSFwLEKKTyEprmnF94PMGg2hm6YrWdco9O8f3pQfFmrDDqPxnqGfV4fa3rl1tVaMqHHOKMYmpJq6KtMw0jtdToMY02JokpE9vgY7ir98aoPy7K47n9vSoEyfaDY74kFo/E+L5S+W22rl+oSYeFPDggj34wS8XSi+Jk+4SqDje782eI+CJIFfqJdFvf4Fyn2xMB/oK0mgnDcLz+aINkqwT3dQle0vKjV4WgGYB3/rMx0inqS8jqsyvT0cA2M8DTvjX0ucp6o3lFllQWT4is5/XODrghZB7j/4Wn51481V9Yn1u1F4Ea5IjVm6RBERCZVmqT2AFQQVUrordE31LjDnsq5RkgIU0J6FX9ZdAu0LVIl7Ul41/7+Nhri4D/xp9fvAj0MlfvakbA==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    </body></html>

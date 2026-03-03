@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRANSMISSION_FORM // Contact</title>
+    <link rel="icon" type="image/x-icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/robot.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        background: #050a0f;
+        color: #c8f0f0;
+        font-family: 'Share Tech Mono', 'Courier New', monospace;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background:
+          repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 243, 255, 0.015) 2px, rgba(0, 243, 255, 0.015) 4px),
+          repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(0, 243, 255, 0.01) 60px, rgba(0, 243, 255, 0.01) 61px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .page-header {
+        width: 100%;
+        max-width: 760px;
+        margin-bottom: 32px;
+        text-align: left;
+        position: relative;
+        z-index: 1;
+      }
+
+      .page-header .back-link {
+        color: #00b8c8;
+        text-decoration: none;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+      .page-header .back-link:hover { opacity: 1; }
+
+      .page-title {
+        font-family: 'Orbitron', monospace;
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        color: #00f3ff;
+        text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+        margin-top: 12px;
+        letter-spacing: 3px;
+      }
+
+      .page-subtitle {
+        font-size: 0.75rem;
+        color: #4a8a8a;
+        letter-spacing: 2px;
+        margin-top: 6px;
+      }
+
+      .form-container {
+        width: 100%;
+        max-width: 760px;
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(0, 200, 220, 0.25);
+        background: rgba(0, 15, 20, 0.85);
+        backdrop-filter: blur(8px);
+      }
+
+      .form-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(0, 200, 220, 0.2);
+        background: rgba(0, 30, 40, 0.6);
+      }
+
+      .form-titlebar-text {
+        font-size: 0.78rem;
+        color: #00c8d8;
+        letter-spacing: 2px;
+      }
+
+      .titlebar-dots {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+      }
+
+      .titlebar-dots span {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        display: block;
+      }
+      .dot-red    { background: #ff5f57; }
+      .dot-yellow { background: #febc2e; }
+      .dot-green  { background: #28c840; }
+
+      .form-body {
+        padding: 36px 28px 28px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      @media (max-width: 560px) {
+        .form-row { grid-template-columns: 1fr; }
+      }
+
+      .field-group { display: flex; flex-direction: column; gap: 10px; }
+
+      .field-label {
+        font-size: 0.72rem;
+        color: #00c8d8;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+      }
+
+      .bracket-input-wrap {
+        position: relative;
+      }
+
+      .bracket-input-wrap::before,
+      .bracket-input-wrap::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-color: #00c8d8;
+        border-style: solid;
+        opacity: 0.7;
+        z-index: 2;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+
+      .bracket-input-wrap::before {
+        top: 0; left: 0;
+        border-width: 1.5px 0 0 1.5px;
+      }
+      .bracket-input-wrap::after {
+        bottom: 0; right: 0;
+        border-width: 0 1.5px 1.5px 0;
+      }
+
+      .bracket-input-wrap:focus-within::before,
+      .bracket-input-wrap:focus-within::after {
+        opacity: 1;
+      }
+
+      .field-input,
+      .field-textarea {
+        width: 100%;
+        background: rgba(0, 40, 50, 0.5);
+        border: 1px solid rgba(0, 180, 200, 0.2);
+        color: #9ad8d8;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.88rem;
+        padding: 14px 16px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+        resize: none;
+      }
+
+      .field-input::placeholder,
+      .field-textarea::placeholder {
+        color: #2a6060;
+        font-family: 'Share Tech Mono', monospace;
+      }
+
+      .field-input:focus,
+      .field-textarea:focus {
+        border-color: rgba(0, 200, 220, 0.5);
+        background: rgba(0, 50, 65, 0.55);
+        color: #c8f8f8;
+      }
+
+      .field-textarea { height: 140px; display: block; }
+
+      .form-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 32px;
+      }
+
+      .form-disclaimer {
+        font-size: 0.72rem;
+        color: #2e7070;
+        letter-spacing: 0.5px;
+      }
+
+      .submit-btn {
+        position: relative;
+        background: rgba(0, 180, 200, 0.12);
+        border: 1.5px solid rgba(0, 200, 220, 0.5);
+        color: #00f3ff;
+        font-family: 'Orbitron', monospace;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 16px 36px;
+        cursor: pointer;
+        transition: all 0.25s;
+        clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+        min-width: 200px;
+        text-align: center;
+      }
+
+      .submit-btn .exec-label {
+        display: block;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.6rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+        color: #008899;
+        margin-top: 4px;
+        text-align: right;
+      }
+
+      .submit-btn:hover {
+        background: rgba(0, 200, 220, 0.22);
+        border-color: #00f3ff;
+        box-shadow: 0 0 24px rgba(0, 243, 255, 0.25), inset 0 0 12px rgba(0, 243, 255, 0.06);
+        color: #fff;
+      }
+
+      .submit-btn:active { transform: scale(0.98); }
+
+      .submit-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .status-msg {
+        margin-top: 20px;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+        min-height: 20px;
+        text-align: center;
+        display: none;
+      }
+      .status-msg.success { color: #28c840; display: block; }
+      .status-msg.error   { color: #ff5f57; display: block; }
+
+      .scanline {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(0, 0, 0, 0.08) 3px,
+          rgba(0, 0, 0, 0.08) 4px
+        );
+        pointer-events: none;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanline"></div>
+
+    <div class="page-header">
+      <a href="search.html" class="back-link"><i class="fas fa-chevron-left"></i> &nbsp;RETURN_TO_BASE</a>
+      <h1 class="page-title">CONTACT_TERMINAL</h1>
+      <p class="page-subtitle">// SECURE CHANNEL &nbsp;●&nbsp; ENCRYPTED TRANSMISSION &nbsp;●&nbsp; RESPONSE: 24-48H</p>
+    </div>
+
+    <div class="form-container">
+      <div class="form-titlebar">
+        <span class="form-titlebar-text">TRANSMISSION_FORM_V1.2</span>
+        <div class="titlebar-dots">
+          <span class="dot-red"></span>
+          <span class="dot-yellow"></span>
+          <span class="dot-green"></span>
+        </div>
+      </div>
+
+      <div class="form-body">
+        <form id="contactForm" novalidate>
+
+          <div class="form-row">
+            <div class="field-group">
+              <label class="field-label" for="nameInput">IDENTIFIER (NAME)</label>
+              <div class="bracket-input-wrap">
+                <input
+                  class="field-input"
+                  type="text"
+                  id="nameInput"
+                  placeholder="Enter alias..."
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="emailInput">COMM_NODE (EMAIL)</label>
+              <div class="bracket-input-wrap">
+                <input
+                  class="field-input"
+                  type="email"
+                  id="emailInput"
+                  placeholder="name@domain.com"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="messageInput">PAYLOAD (MESSAGE)</label>
+            <div class="bracket-input-wrap">
+              <textarea
+                class="field-textarea"
+                id="messageInput"
+                placeholder="Transmit your query or data sequence here..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <span class="form-disclaimer">By executing, you agree to H9 protocols.</span>
+            <button type="submit" class="submit-btn" id="submitBtn">
+              TRANSMIT DATA
+              <span class="exec-label">EXEC_CMD.</span>
+            </button>
+          </div>
+
+          <div class="status-msg" id="statusMsg"></div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('contactForm');
+      const statusMsg = document.getElementById('statusMsg');
+      const submitBtn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const name = document.getElementById('nameInput').value.trim();
+        const email = document.getElementById('emailInput').value.trim();
+        const message = document.getElementById('messageInput').value.trim();
+
+        statusMsg.className = 'status-msg';
+        statusMsg.textContent = '';
+
+        if (!name || !email || !message) {
+          statusMsg.textContent = '> ERROR: All fields required. Transmission aborted.';
+          statusMsg.className = 'status-msg error';
+          return;
+        }
+
+        const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRx.test(email)) {
+          statusMsg.textContent = '> ERROR: Invalid COMM_NODE address. Check format.';
+          statusMsg.className = 'status-msg error';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'TRANSMITTING...<span class="exec-label">PROCESSING_CMD.</span>';
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'TRANSMIT DATA<span class="exec-label">EXEC_CMD.</span>';
+          statusMsg.textContent = '> TRANSMISSION COMPLETE. Awaiting response within 24-48H.';
+          statusMsg.className = 'status-msg success';
+          form.reset();
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>

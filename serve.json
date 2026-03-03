@@ -1,0 +1,18 @@
+{
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/search", "destination": "/search.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/dork", "destination": "/dork/index.html" },
+    { "source": "/dork/meta-extractor", "destination": "/dork/meta-extractor.html" },
+    { "source": "/dork/emoji-crypt", "destination": "/dork/emoji-crypt.html" },
+    { "source": "/dork/privacy", "destination": "/dork/privacy.html" },
+    { "source": "/dork/academy", "destination": "/dork/academy/index.html" },
+    { "source": "/dork/academy/index", "destination": "/dork/academy/index.html" },
+    { "source": "/dork/academy/glossary", "destination": "/dork/academy/glossary.html" },
+    { "source": "/dork/academy/top-10-dorks", "destination": "/dork/academy/top-10-dorks.html" },
+    { "source": "/dork/academy/what-is-osint", "destination": "/dork/academy/what-is-osint.html" },
+    { "source": "/dork/academy/defensive-dorking", "destination": "/dork/academy/defensive-dorking.html" }
+  ]
+}

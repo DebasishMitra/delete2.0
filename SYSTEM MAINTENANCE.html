@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>502 - System Maintenance</title>
+    <style>
+        /* --- RESET & BASICS --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #030303;
+            color: #0ff; /* Cyan Neon */
+            font-family: 'Courier New', Courier, monospace; /* Monospace for terminal feel */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND GRID --- */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 1;
+            perspective: 500px;
+        }
+
+        /* --- CONTAINER --- */
+        .terminal-container {
+            z-index: 10;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 3rem;
+            background: rgba(0, 20, 20, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        /* --- GLITCH HEADER --- */
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 0px #f0f, -2px -2px 0px #0ff;
+            animation: glitch 1s infinite alternate-reverse;
+            letter-spacing: 5px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        /* --- TYPING TEXT --- */
+        .message-log {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(0, 255, 255, 0.8);
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding-top: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #0ff;
+            animation: blink 1s step-end infinite;
+        }
+
+        /* --- PROGRESS BAR --- */
+        .progress-container {
+            margin-top: 2rem;
+            width: 100%;
+            height: 4px;
+            background: #111;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #0ff;
+            box-shadow: 0 0 10px #0ff;
+            width: 0%;
+            animation: load 4s ease-in-out infinite;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes load {
+            0% { width: 0%; opacity: 1; }
+            50% { width: 70%; opacity: 1; }
+            100% { width: 100%; opacity: 0; }
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 0px #f0f, -2px -2px 0px #0ff; transform: translate(0); }
+            20% { text-shadow: -2px -2px 0px #f0f, 2px 2px 0px #0ff; transform: translate(-2px, 2px); }
+            40% { text-shadow: 2px -2px 0px #f0f, -2px 2px 0px #0ff; transform: translate(2px, -2px); }
+            60% { text-shadow: -2px 2px 0px #f0f, 2px -2px 0px #0ff; transform: translate(-2px, 0); }
+            80% { text-shadow: 2px 2px 0px #f0f, -2px -2px 0px #0ff; transform: translate(2px, 2px); }
+            100% { text-shadow: -2px -2px 0px #f0f, 2px 2px 0px #0ff; transform: translate(0); }
+        }
+
+        /* --- SCANLINE OVERLAY --- */
+        .scanline {
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 50%, rgba(255, 255, 255, 0.02) 50%), linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+            background-size: 100% 2px, 3px 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanline"></div>
+    <div class="grid-bg"></div>
+
+    <div class="terminal-container">
+        <div class="error-code">502</div>
+        <h2>SYSTEM MAINTENANCE</h2>
+        
+        <div class="message-log" id="log">
+            </div>
+        <span class="cursor"></span>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const logElement = document.getElementById('log');
+        const messages = [
+            "> Establishing secure uplink...",
+            "> Error: Gateway Protocol failed.",
+            "> Re-routing neural pathways...",
+            "> Optimizing server clusters...",
+            "> Estimated recovery: Shortly."
+        ];
+
+        let messageIndex = 0;
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (messageIndex < messages.length) {
+                if (charIndex < messages[messageIndex].length) {
+                    logElement.innerHTML += messages[messageIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 50); // Typing speed
+                } else {
+                    logElement.innerHTML += "<br>";
+                    messageIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 500); // Pause between lines
+                }
+            }
+        }
+
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>

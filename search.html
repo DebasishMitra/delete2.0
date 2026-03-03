@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌍 Welcome</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/robot.svg"
+    />
+    <link href="search.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="futuristic-intro" id="futuristicIntro">
+      <div class="grid-background"></div>
+      <div class="particles" id="particles"></div>
+      <div class="central-orb"></div>
+      <div class="intro-text">
+        <div class="glitch-text" id="glitchText">ONLINE</div>
+        <div class="loading-bar">
+          <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="background-overlay" id="backgroundOverlay"></div>
+
+    <div class="top-bar">
+      <div class="weather-container">
+        <div class="weather-widget" id="weatherWidget">
+          <div class="weather-loading">Loading weather...</div>
+        </div>
+        <div class="weather-details" id="weatherDetails" style="display:none;"></div>
+        <div
+          class="weather-controls"
+          style="display: none"
+          id="weatherControls"
+        >
+          <input
+            type="text"
+            id="manualLocation"
+            placeholder="Enter City/Address..."
+            class="weather-input"
+          />
+          <button id="setManualLocation" class="weather-btn">Set</button>
+          <button id="autoLocationBtn" class="weather-btn" title="Use my location"><i class="fas fa-location-crosshairs"></i></button>
+        </div>
+      </div>
+        <div class="profile-section">
+          <div class="app-list-trigger" id="appListTrigger" title="App List">
+            <i class="fas fa-th"></i>
+          </div>
+          <div class="profile-photo" id="profilePhoto">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="time-container" id="timeContainer">
+        <div class="clock-digital" id="clockDigital">
+          <div class="time" id="time"></div>
+          <div class="date" id="date"></div>
+        </div>
+        <div class="clock-analog" id="clockAnalog" style="display: none">
+          <div class="analog-face">
+            <div class="center-dot"></div>
+            <div class="hand hour-hand" id="hourHand"></div>
+            <div class="hand minute-hand" id="minuteHand"></div>
+            <div class="hand second-hand" id="secondHand"></div>
+            <div class="hour-marker" style="transform: rotate(0deg)">
+              <span>12</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(30deg)">
+              <span>1</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(60deg)">
+              <span>2</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(90deg)">
+              <span>3</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(120deg)">
+              <span>4</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(150deg)">
+              <span>5</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(180deg)">
+              <span>6</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(210deg)">
+              <span>7</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(240deg)">
+              <span>8</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(270deg)">
+              <span>9</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(300deg)">
+              <span>10</span>
+            </div>
+            <div class="hour-marker" style="transform: rotate(330deg)">
+              <span>11</span>
+            </div>
+          </div>
+          <div class="date analog-date" id="analogDate"></div>
+        </div>
+        <div class="clock-pixel" id="clockPixel" style="display: none">
+          <div class="pixel-time" id="pixelTime"></div>
+          <div class="date pixel-date" id="pixelDate"></div>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <h1 class="search-title">DEBASISH</h1>
+        <form class="search-form" id="searchForm">
+          <div class="search-engine-icons dropdown">
+            <button
+              type="button"
+              class="engine-icon active dropdown-trigger"
+              id="engineSelector"
+              title="Select Search Engine"
+            >
+              <i class="fab fa-google"></i>
+            </button>
+            <div class="engine-dropdown-content" id="engineDropdown">
+              <button
+                type="button"
+                class="engine-icon active"
+                data-engine="google"
+                title="Google"
+              >
+                <i class="fab fa-google"></i> Google
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="perplexity"
+                title="Perplexity (AI)"
+              >
+                <i class="fas fa-brain"></i> Perplexity
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="phind"
+                title="Phind (AI Dev)"
+              >
+                <i class="fas fa-code"></i> Phind
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="bing"
+                title="Bing"
+              >
+                <i class="fab fa-microsoft"></i> Bing
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="duckduckgo"
+                title="DuckDuckGo"
+              >
+                <i class="fas fa-search"></i> DuckDuckGo
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="yahoo"
+                title="Yahoo"
+              >
+                <i class="fab fa-yahoo"></i> Yahoo
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="yandex"
+                title="Yandex"
+              >
+                <i class="fab fa-yandex"></i> Yandex
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="chatgpt"
+                title="ChatGPT"
+              >
+                <i class="fas fa-robot"></i> ChatGPT
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="gemini"
+                title="Gemini"
+              >
+                <i class="fas fa-sparkles"></i> Gemini
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="deepseek"
+                title="DeepSeek"
+              >
+                <i class="fas fa-microchip"></i> DeepSeek
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="grok"
+                title="Grok"
+              >
+                <i class="fas fa-brain"></i> Grok
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="brave"
+                title="Brave"
+              >
+                <i class="fab fa-fort-awesome"></i> Brave
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="ecosia"
+                title="Ecosia"
+              >
+                <i class="fas fa-tree"></i> Ecosia
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="ask"
+                title="Ask"
+              >
+                <i class="fas fa-question"></i> Ask
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="aol"
+                title="AOL"
+              >
+                <i class="fas fa-search"></i> AOL
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="baidu"
+                title="Baidu"
+              >
+                <i class="fas fa-paw"></i> Baidu
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="privacywall"
+                title="PrivacyWall"
+              >
+                <i class="fas fa-shield-alt"></i> PrivacyWall
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="qwant"
+                title="Qwant"
+              >
+                <i class="fas fa-eye-slash"></i> Qwant
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="mojeek"
+                title="Mojeek"
+              >
+                <i class="fas fa-search-plus"></i> Mojeek
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="karma"
+                title="Karma"
+              >
+                <i class="fas fa-leaf"></i> Karma
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="yep"
+                title="Yep"
+              >
+                <i class="fas fa-check"></i> Yep
+              </button>
+              <button
+                type="button"
+                class="engine-icon"
+                data-engine="startpage"
+                title="Startpage"
+              >
+                <i class="fas fa-lock"></i> Startpage
+              </button>
+            </div>
+          </div>
+          <div class="search-input-wrapper">
+            <button type="button" class="upload-btn" id="uploadBtn">
+              <i class="fas fa-plus"></i>
+            </button>
+            <div class="upload-dropdown" id="uploadDropdown">
+              <div class="upload-item" id="uploadImageItem">
+                <i class="fas fa-image"></i>
+                <span>Upload image</span>
+              </div>
+            </div>
+            <input type="file" id="imageFileInput" accept="image/*" style="display:none;" />
+            <input
+              type="text"
+              class="search-input"
+              id="searchInput"
+              placeholder="Search with Google..."
+              autocomplete="off"
+            />
+            <div class="search-actions-right">
+              <button type="button" class="search-action-btn" id="googleLensBtn" title="Search any image with Google Lens"><i class="fas fa-camera"></i></button>
+              <button type="button" class="search-action-btn" id="bingLensBtn" title="Search any image with Bing Visual Search" style="display: none;"><i class="fas fa-camera"></i></button>
+            </div>
+          </div>
+          <div class="search-submit-group">
+            <button type="button" class="ai-mode-btn ai-circle-btn" id="googleAiBtn" title="Google AI Search">
+              <i class="fas fa-sparkles"></i> AI
+            </button>
+            <button type="button" class="ai-mode-btn" id="duckduckgoAiBtn" title="DuckDuckGo AI Search" style="display: none;">
+              <i class="fas fa-robot"></i> AI Search
+            </button>
+            <button type="submit" class="search-button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="lens-panel" id="lensPanel">
+          <div class="lens-panel-header">
+            <span class="lens-panel-title">Search any image with Google</span>
+            <button type="button" class="lens-panel-close" id="lensPanelClose"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="lens-drop-zone" id="lensDropZone">
+            <div class="lens-drop-content">
+              <i class="fas fa-image lens-drop-icon"></i>
+              <span>Drag an image here or <label for="lensFileInput" class="lens-upload-link">upload a file</label></span>
+            </div>
+            <input type="file" id="lensFileInput" accept="image/*" hidden />
+          </div>
+          <div class="lens-divider"><span>OR</span></div>
+          <div class="lens-url-row">
+            <input type="text" id="lensUrlInput" class="lens-url-input" placeholder="Paste image link" />
+            <button type="button" class="lens-url-btn" id="lensUrlBtn">Search</button>
+          </div>
+        </div>
+
+        <div class="lens-panel" id="bingLensPanel">
+          <div class="lens-panel-header">
+            <span class="lens-panel-title">Search any image with Bing</span>
+            <button type="button" class="lens-panel-close" id="bingLensPanelClose"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="lens-drop-zone" id="bingLensDropZone">
+            <div class="lens-drop-content">
+              <i class="fas fa-image lens-drop-icon"></i>
+              <span>Drag an image here or <label for="bingLensFileInput" class="lens-upload-link">upload a file</label></span>
+            </div>
+            <input type="file" id="bingLensFileInput" accept="image/*" hidden />
+          </div>
+          <div class="lens-divider"><span>OR</span></div>
+          <div class="lens-url-row">
+            <input type="text" id="bingLensUrlInput" class="lens-url-input" placeholder="Paste image link" />
+            <button type="button" class="lens-url-btn" id="bingLensUrlBtn">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-engines-bar">
+        <div class="search-engines-title">Quick Search</div>
+        <div class="search-engines-grid">
+          <a
+            href="https://www.google.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-google"></i>
+            <span>Google</span>
+          </a>
+          <a
+            href="https://www.bing.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-microsoft"></i>
+            <span>Bing</span>
+          </a>
+          <a
+            href="https://www.youtube.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-youtube"></i>
+            <span>YouTube</span>
+          </a>
+          <a
+            href="https://www.amazon.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-amazon"></i>
+            <span>Amazon</span>
+          </a>
+          <a
+            href="https://www.wikipedia.org"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-wikipedia-w"></i>
+            <span>Wikipedia</span>
+          </a>
+          <a
+            href="https://www.reddit.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-reddit"></i>
+            <span>Reddit</span>
+          </a>
+          <a
+            href="https://www.twitter.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-twitter"></i>
+            <span>Twitter</span>
+          </a>
+          <a
+            href="https://www.github.com"
+            target="_blank"
+            class="search-engine-item"
+          >
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="links-header">
+        <h3>Quick Links</h3>
+        <button class="add-bookmark-btn" id="addBookmarkBtn">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Add Bookmark
+        </button>
+      </div>
+
+      <div class="links-container" id="linksContainer"></div>
+
+      <div class="network-dashboard">
+        <div class="network-dashboard-header">
+          <i class="fas fa-network-wired"></i>
+          <span>Network Dashboard</span>
+        </div>
+
+        <div class="network-dashboard-grid">
+          <div class="speed-card">
+            <div class="speed-card-inner">
+              <div class="speed-gauge-ring">
+                <svg viewBox="0 0 120 120" class="gauge-svg">
+                  <circle cx="60" cy="60" r="52" class="gauge-track"></circle>
+                  <circle cx="60" cy="60" r="52" class="gauge-fill" id="downloadGauge"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <div class="metric-value" id="downloadValue">--</div>
+                  <div class="metric-unit">Mbps</div>
+                </div>
+              </div>
+              <div class="speed-card-label"><i class="fas fa-arrow-down"></i> Download</div>
+            </div>
+          </div>
+
+          <div class="speed-card">
+            <div class="speed-card-inner">
+              <div class="speed-gauge-ring">
+                <svg viewBox="0 0 120 120" class="gauge-svg">
+                  <circle cx="60" cy="60" r="52" class="gauge-track"></circle>
+                  <circle cx="60" cy="60" r="52" class="gauge-fill" id="uploadGauge"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <div class="metric-value" id="uploadValue">--</div>
+                  <div class="metric-unit">Mbps</div>
+                </div>
+              </div>
+              <div class="speed-card-label"><i class="fas fa-arrow-up"></i> Upload</div>
+            </div>
+          </div>
+
+          <div class="speed-card ping-card">
+            <div class="speed-card-inner">
+              <div class="ping-display">
+                <i class="fas fa-signal ping-icon"></i>
+                <div class="metric-value" id="pingValue">--</div>
+                <div class="metric-unit">ms</div>
+              </div>
+              <div class="speed-card-label"><i class="fas fa-bolt"></i> Ping</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="speed-test-btn" id="speedTestBtn">
+          <i class="fas fa-play"></i>
+          <span>Run Speed Test</span>
+        </button>
+        <div class="speed-status" id="speedStatus"></div>
+
+        <div class="network-info-grid">
+          <div class="net-info-chip">
+            <i class="fas fa-globe"></i>
+            <span id="ipInfo">Loading IP...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-server"></i>
+            <span id="dnsIpInfo">DNS IP: Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-flag"></i>
+            <span id="countryInfo">Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-city"></i>
+            <span id="cityInfo">Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="stateInfo">Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-desktop"></i>
+            <span id="osInfo">OS: Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-window-maximize"></i>
+            <span id="browserInfo">Browser: Loading...</span>
+          </div>
+          <div class="net-info-chip">
+            <i class="fas fa-clock"></i>
+            <span id="timezoneInfo">Loading timezone...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-list-dropdown" id="appListDropdown">
+      <div class="app-list-header">
+        <div class="header-left">
+          <i class="fas fa-rocket"></i>
+          <span>Launchpad</span>
+        </div>
+        <div class="header-actions">
+          <button class="header-action-btn" id="editAppsBtnTop" title="Edit Apps">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="header-action-btn" id="arrangeAppsBtn" title="Arrange Icons">
+            <i class="fas fa-arrows-alt"></i>
+          </button>
+        </div>
+      </div>
+      <div class="app-list-grid" id="appListGrid"></div>
+      <div class="app-list-footer">
+        <button id="addAppBtn">
+          <i class="fas fa-plus-circle"></i>
+          <span>Add App</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal" id="appModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="appModalTitle">Add App</h2>
+          <button class="close-btn" id="closeAppModal">&times;</button>
+        </div>
+        <form id="appForm">
+          <div class="form-group">
+            <label for="appName">App Name</label>
+            <input
+              type="text"
+              id="appName"
+              required
+              placeholder="e.g., YouTube"
+            />
+          </div>
+          <div class="form-group">
+            <label for="appUrl">App URL</label>
+            <input
+              type="url"
+              id="appUrl"
+              required
+              placeholder="https://youtube.com"
+            />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancelAppBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="bookmarkModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Add Bookmark</h2>
+          <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <form id="bookmarkForm">
+          <div class="form-group">
+            <label for="bookmarkName">Name</label>
+            <input
+              type="text"
+              id="bookmarkName"
+              required
+              placeholder="e.g., Gmail"
+            />
+          </div>
+          <div class="form-group">
+            <label for="bookmarkUrl">URL</label>
+            <input
+              type="url"
+              id="bookmarkUrl"
+              required
+              placeholder="https://example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="bookmarkCategory">Category</label>
+            <div class="category-input-group">
+              <select id="bookmarkCategory" required></select>
+              <button type="button" class="btn-icon" id="addCategoryBtn" title="Add New Category">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-group" id="newCategoryGroup" style="display:none;">
+            <label for="newCategoryName">New Category Name</label>
+            <input type="text" id="newCategoryName" placeholder="e.g. Work" />
+            <label for="newCategoryIcon">Icon (Emoji)</label>
+            <input type="text" id="newCategoryIcon" placeholder="e.g. 📁" />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancelBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="profileModal">
+      <div class="modal-content profile-modal-content">
+        <div class="profile-header-banner">
+          <div class="profile-banner-bg" id="profileBannerBg"></div>
+          <label for="bannerImageUpload" class="banner-upload-label" title="Upload banner image">
+            <i class="fas fa-camera"></i>
+            <input type="file" id="bannerImageUpload" accept="image/*" hidden />
+          </label>
+          <button class="profile-close-btn" id="closeProfileModal"><i class="fas fa-times"></i></button>
+          <div class="profile-avatar-section">
+            <div class="profile-avatar-wrapper">
+              <div class="profile-avatar-preview" id="profileAvatarPreview">
+                <i class="fas fa-user"></i>
+              </div>
+              <label for="profileImageUpload" class="avatar-upload-label">
+                <i class="fas fa-camera"></i>
+                <input type="file" id="profileImageUpload" accept="image/*" hidden />
+              </label>
+            </div>
+            <div class="profile-identity">
+              <input type="text" id="userName" class="profile-name-input" placeholder="Your Name" />
+              <span class="profile-subtitle">Dashboard User</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-tab-bar">
+            <button class="profile-tab active" data-tab="appearance"><i class="fas fa-palette"></i> Appearance</button>
+            <button class="profile-tab" data-tab="preferences"><i class="fas fa-sliders-h"></i> Preferences</button>
+            <button class="profile-tab" data-tab="security"><i class="fas fa-shield-alt"></i> Security</button>
+          </div>
+
+          <div class="profile-tab-content active" id="tab-appearance">
+            <div class="profile-field-group">
+              <label class="profile-field-label"><i class="fas fa-image"></i> Profile Image URL</label>
+              <div class="profile-input-row">
+                <input type="url" id="profileImageUrl" placeholder="https://example.com/photo.jpg" />
+                <div class="profile-url-preview" id="profileUrlPreview"></div>
+              </div>
+            </div>
+
+            <div class="profile-field-group">
+              <label class="profile-field-label"><i class="fas fa-mountain-sun"></i> Wallpaper URL</label>
+              <div class="profile-input-row">
+                <input type="url" id="customWallpaperUrl" placeholder="https://example.com/wallpaper.jpg" />
+                <div class="wallpaper-mini-preview" id="wallpaperMiniPreview"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-tab-content" id="tab-preferences">
+            <div class="pref-item">
+              <div class="pref-info">
+                <i class="fas fa-search"></i>
+                <div>
+                  <span class="pref-title">Search Suggestions</span>
+                  <span class="pref-desc">Show search hints as you type</span>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggleSuggestions" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="pref-item">
+              <div class="pref-info">
+                <i class="fas fa-gem"></i>
+                <div>
+                  <span class="pref-title">Glassmorphism</span>
+                  <span class="pref-desc">Frosted glass visual effects</span>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggleGlass" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="pref-item">
+              <div class="pref-info">
+                <i class="fas fa-clock"></i>
+                <div>
+                  <span class="pref-title">24-Hour Clock</span>
+                  <span class="pref-desc">Use 24h time format</span>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggle24Hour">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="pref-item">
+              <div class="pref-info">
+                <i class="fas fa-eye"></i>
+                <div>
+                  <span class="pref-title">Show Seconds</span>
+                  <span class="pref-desc">Display seconds on clock</span>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggleSeconds" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="profile-tab-content" id="tab-security">
+
+            <div class="sec-nav-pill-wrapper">
+              <div class="sec-quick-nav">
+                <button class="sec-nav-pill active" data-sec-target="secCardCredentials"><i class="fas fa-user-shield"></i> Credentials</button>
+                <button class="sec-nav-pill" data-sec-target="secCardMethods"><i class="fas fa-link"></i> Login Methods</button>
+                <button class="sec-nav-pill" data-sec-target="secCardBackup"><i class="fas fa-bookmark"></i> Bookmarks</button>
+              </div>
+            </div>
+
+            <div class="sec-scroll-area" id="secScrollArea">
+
+            <div class="sec-card" id="secCardCredentials">
+              <div class="sec-card-header">
+                <div class="sec-card-icon"><i class="fas fa-user-shield"></i></div>
+                <div>
+                  <div class="sec-card-title">Account Credentials</div>
+                  <div class="sec-card-subtitle">Your email and password</div>
+                </div>
+              </div>
+              <div class="sec-card-body">
+                <div class="sec-field">
+                  <label class="sec-field-label">Email Address</label>
+                  <input type="email" id="secEmail" class="sec-field-input" readonly />
+                </div>
+                <div class="sec-field">
+                  <label class="sec-field-label">Current Password</label>
+                  <div class="sec-field-pwd">
+                    <input type="password" id="secCurrentPassword" class="sec-field-input" placeholder="Enter current password" />
+                    <button type="button" class="sec-eye" id="secCurrentPwdToggle"><i class="fas fa-eye"></i></button>
+                  </div>
+                </div>
+                <div class="sec-field-row">
+                  <div class="sec-field">
+                    <label class="sec-field-label">New Password</label>
+                    <div class="sec-field-pwd">
+                      <input type="password" id="secNewPassword" class="sec-field-input" placeholder="New password" />
+                      <button type="button" class="sec-eye" id="secNewPwdToggle"><i class="fas fa-eye"></i></button>
+                    </div>
+                  </div>
+                  <div class="sec-field">
+                    <label class="sec-field-label">Confirm</label>
+                    <div class="sec-field-pwd">
+                      <input type="password" id="secConfirmPassword" class="sec-field-input" placeholder="Confirm" />
+                      <button type="button" class="sec-eye" id="secConfirmPwdToggle"><i class="fas fa-eye"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <button class="sec-action-btn sec-btn-cyan" id="secChangePwdBtn"><i class="fas fa-sync-alt"></i> Update Password</button>
+              </div>
+            </div>
+
+            <div class="sec-card" id="secCardMethods">
+              <div class="sec-card-header">
+                <div class="sec-card-icon"><i class="fas fa-link"></i></div>
+                <div>
+                  <div class="sec-card-title">Login Methods</div>
+                  <div class="sec-card-subtitle">Alternative ways to sign in</div>
+                </div>
+              </div>
+              <div class="sec-card-body sec-methods-grid">
+                <div class="sec-method-card" id="secPasskey">
+                  <div class="sec-method-icon-lg"><i class="fas fa-fingerprint"></i></div>
+                  <div class="sec-method-name">Passkey</div>
+                  <div class="sec-method-status" id="secPasskeyStatus">Not linked</div>
+                  <button class="sec-method-toggle" id="secPasskeyBtn">Link</button>
+                </div>
+                <div class="sec-method-card" id="secAccessId">
+                  <div class="sec-method-icon-lg"><i class="fas fa-key"></i></div>
+                  <div class="sec-method-name">Access ID</div>
+                  <div class="sec-method-status" id="secAccessIdStatus">Not linked</div>
+                  <button class="sec-method-toggle" id="secAccessIdBtn">Link</button>
+                </div>
+                <div class="sec-method-card" id="secUsbKey">
+                  <div class="sec-method-icon-lg"><i class="fas fa-usb"></i></div>
+                  <div class="sec-method-name">USB Key</div>
+                  <div class="sec-method-status" id="secUsbKeyStatus">Not linked</div>
+                  <button class="sec-method-toggle" id="secUsbKeyBtn">Link</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="sec-card" id="secCardBackup">
+              <div class="sec-card-header">
+                <div class="sec-card-icon"><i class="fas fa-bookmark"></i></div>
+                <div>
+                  <div class="sec-card-title">Bookmark Backup</div>
+                  <div class="sec-card-subtitle">Backup bookmarks, apps & search</div>
+                </div>
+              </div>
+              <div class="sec-card-body">
+                <div class="sec-uid-badge">
+                  <i class="fas fa-id-badge"></i>
+                  <span>User ID: <strong id="backupUserId">—</strong></span>
+                </div>
+                <div class="sec-backup-row">
+                  <button class="sec-action-btn sec-btn-cyan" id="backupExportBtn"><i class="fas fa-download"></i> Export HTML</button>
+                  <label class="sec-action-btn sec-btn-purple" for="backupImportFile">
+                    <i class="fas fa-upload"></i> Import HTML
+                    <input type="file" id="backupImportFile" accept=".html" hidden />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            </div>
+
+          </div>
+
+          <div class="profile-actions">
+            <button type="button" class="profile-save-btn" id="saveProfileBtn">
+              <i class="fas fa-check-circle"></i> Save Changes
+            </button>
+            <button type="button" class="profile-reset-btn" id="resetProfileBtn">
+              <i class="fas fa-undo"></i> Reset
+            </button>
+          </div>
+          <button type="button" class="profile-logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Log Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="search.js"></script>
+  </body>
+</html>
