@@ -3,21 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debasish | Developer & cyber_security</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Cyber World Gateway | Click Challenge</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;700&display=swap');
-        
-        :root {
-            --bg-color: #0a0e17;
-            --card-bg: #111927;
-            --accent-color: #00ff9d;
-            --secondary-accent: #0088ff;
-            --text-color: #e6e6e6;
-            --secondary-text: #a0a0a0;
-            --border-color: #1e2a3a;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -25,660 +12,474 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
+            background: #0a0a0a;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            align-items: center;
+            overflow: hidden;
+            color: #0af;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 170, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 170, 0.05) 0%, transparent 50%);
         }
         
-        /* Matrix rain effect */
-        .matrix-background {
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 170, 255, 0.3);
+            box-shadow: 
+                0 0 50px rgba(0, 170, 255, 0.2),
+                inset 0 0 30px rgba(0, 170, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .glitch-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0af;
+            text-shadow: 
+                0 0 10px #0af,
+                0 0 20px #0af,
+                0 0 30px #0af;
+            margin-bottom: 30px;
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            92% { transform: translateX(-2px); }
+            94% { transform: translateX(2px); }
+            96% { transform: translateX(-1px); }
+            98% { transform: translateX(1px); }
+        }
+        
+        .cyber-btn {
+            background: linear-gradient(45deg, #00aaff, #00ffaa);
+            color: #000;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 0 30px rgba(0, 170, 255, 0.5),
+                0 0 60px rgba(0, 255, 170, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 30px rgba(0, 170, 255, 0.5),
+                    0 0 60px rgba(0, 255, 170, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 40px rgba(0, 170, 255, 0.7),
+                    0 0 80px rgba(0, 255, 170, 0.5);
+            }
+        }
+        
+        .cyber-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 40px rgba(0, 170, 255, 0.7),
+                0 0 80px rgba(0, 255, 170, 0.5);
+        }
+        
+        .counter-display {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .instruction {
+            color: #8af;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .youtube-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #ff0000, #ff5555);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: youtubeGlow 2s infinite;
+        }
+        
+        @keyframes youtubeGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+            }
+        }
+        
+        .youtube-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+        }
+        
+        .youtube-icon {
+            font-size: 1.5rem;
+        }
+        
+        .cyber-world {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            overflow: hidden;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
         }
         
-        .matrix-column {
-            position: absolute;
-            top: -100%;
-            width: 30px;
-            color: var(--accent-color);
-            font-family: 'Fira Code', monospace;
-            font-size: 1.2rem;
+        .cyber-text {
+            font-size: 5rem;
+            color: #0f0;
+            text-shadow: 
+                0 0 10px #0f0,
+                0 0 20px #0f0,
+                0 0 40px #0f0;
+            animation: cyberGlitch 0.5s infinite;
+            font-family: 'Courier New', monospace;
             text-align: center;
-            animation: matrix-rain linear infinite;
+            margin-bottom: 50px;
         }
         
-        @keyframes matrix-rain {
-            0% {
-                top: -100%;
-            }
-            100% {
-                top: 100%;
-            }
+        @keyframes cyberGlitch {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
         
-        /* Container styling */
-        .container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 
-                        0 1px 2px rgba(0, 255, 157, 0.1),
-                        0 -1px 2px rgba(0, 136, 255, 0.1);
-            position: relative;
-            z-index: 1;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 1s;
         }
         
-        /* Terminal header */
-        .terminal-header {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .terminal-buttons {
-            display: flex;
-            gap: 8px;
-            margin-right: 15px;
-        }
-        
-        .terminal-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .terminal-button.red { background-color: #ff5f56; }
-        .terminal-button.yellow { background-color: #ffbd2e; }
-        .terminal-button.green { background-color: #27c93f; }
-        
-        .terminal-title {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
-            color: var(--secondary-text);
-            flex-grow: 1;
+        .hacker-text {
+            color: #0f0;
+            font-size: 1.5rem;
+            margin-top: 30px;
             text-align: center;
+            font-family: 'Courier New', monospace;
         }
         
-        /* Profile section */
-        .profile {
-            padding: 30px 25px 20px;
-            text-align: center;
-            position: relative;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .profile-img-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-        }
-        
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 2px solid var(--border-color);
-            transition: all 0.3s ease;
-            filter: grayscale(20%);
-        }
-        
-        .profile-img-container::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border-radius: 15px;
-            background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
-            z-index: -1;
-            opacity: 0.7;
-            animation: glow 3s infinite alternate;
-        }
-        
-        @keyframes glow {
-            0% {
-                opacity: 0.5;
-                filter: blur(10px);
-            }
-            100% {
-                opacity: 0.8;
-                filter: blur(15px);
-            }
-        }
-        
-        .profile-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, var(--accent-color), var(--secondary-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 0.5px;
-        }
-        
-        .profile-title {
-            font-family: 'Fira Code', monospace;
-            display: block;
-            color: var(--secondary-text);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1em;
-            background-color: var(--accent-color);
-            margin-left: 2px;
-            vertical-align: text-bottom;
-            animation: blink 0.75s step-end infinite;
-        }
-        
-        @keyframes blink {
-            from, to { opacity: 0; }
-            50% { opacity: 1; }
-        }
-        
-        /* Skills section */
-        .skills {
-            padding: 15px 25px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .skills-title {
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            color: var(--secondary-text);
-            font-family: 'Fira Code', monospace;
-            display: flex;
-            align-items: center;
-        }
-        
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .skill-tag {
-            background-color: rgba(0, 255, 157, 0.1);
-            border: 1px solid rgba(0, 255, 157, 0.3);
-            border-radius: 4px;
-            padding: 4px 10px;
-            font-size: 0.8rem;
-            font-family: 'Fira Code', monospace;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 5px rgba(0, 255, 157, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .skill-tag:hover {
-            background-color: rgba(0, 255, 157, 0.2);
-            box-shadow: 0 0 8px rgba(0, 255, 157, 0.2);
-        }
-        
-        /* Links section */
-        .links {
-            padding: 20px 25px;
-        }
-        
-        .link {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            position: relative;
-            /* Enhanced glowing effect */
-            box-shadow: 0 0 10px rgba(0, 255, 157, 0.2),
-                        0 0 20px rgba(0, 136, 255, 0.1);
-        }
-        
-        .link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.4),
-                        0 0 30px rgba(0, 136, 255, 0.2);
-            border-color: var(--accent-color);
-        }
-        
-        .link::before {
-            content: '';
+        canvas {
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--accent-color), var(--secondary-accent));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        .link:hover::before {
-            opacity: 1;
+        .countdown {
+            font-size: 3rem;
+            color: #f00;
+            margin-top: 20px;
+            text-shadow: 0 0 10px #f00;
         }
-        
-        /* Glowing border effect for links */
-        .link::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            border-radius: 9px;
-            background: linear-gradient(45deg, 
-                                      var(--accent-color), 
-                                      var(--secondary-accent), 
-                                      var(--accent-color));
-            z-index: -1;
-            opacity: 0.2;
-            filter: blur(5px);
-            transition: opacity 0.3s ease, filter 0.3s ease;
-        }
-        
-        .link:hover::after {
-            opacity: 0.4;
-            filter: blur(8px);
-        }
-        
-        .link a {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-        }
-        
-        .link-icon {
-            margin-right: 12px;
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-            color: var(--secondary-text);
-            transition: color 0.3s ease;
-        }
-        
-        .link:hover .link-icon {
-            color: var(--accent-color);
-        }
-        
-        /* Footer */
-        .footer {
-            margin-top: 25px;
-            font-size: 0.85rem;
-            color: var(--secondary-text);
-            text-align: center;
-            font-family: 'Fira Code', monospace;
-        }
-        
-        .code-tag {
-            color: var(--accent-color);
-        }
-        
-        /* Status bar */
-        .status-bar {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 8px 15px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            color: var(--secondary-text);
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .status-item {
-            display: flex;
-            align-items: center;
-        }
-        
-        .status-icon {
-            margin-right: 5px;
-            font-size: 0.7rem;
-        }
-        
-        .status-success {
-            color: var(--accent-color);
-        }
-        
-        /* Performance toggle */
-        .performance-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            color: var(--secondary-text);
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-family: 'Fira Code', monospace;
-            display: flex;
-            align-items: center;
-            z-index: 10;
-        }
-        
-        .performance-toggle:hover {
-            color: var(--accent-color);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 500px) {
-            .container {
-                border-radius: 0;
-                max-width: 100%;
-            }
-            
-            .profile-title {
-                font-size: 0.8rem;
-            }
-        }
-            .social-modal{
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,.7);
-            display:none;
-            align-items:center;
-            justify-content:center;
-            z-index:9999;
-            }
-
-            .social-box{
-            background:var(--card-bg);
-            border:1px solid var(--border-color);
-            border-radius:12px;
-            padding:20px;
-            width:90%;
-            max-width:320px;
-            text-align:center;
-            }
-
-            .social-btn{
-            display:block;
-            margin:10px 0;
-            padding:12px;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:600;
-            color:#000;
-            background:linear-gradient(45deg,var(--accent-color),var(--secondary-accent));
-            }
-
-            .close-btn{
-            background:none;
-            border:none;
-            color:#aaa;
-            margin-top:10px;
-            cursor:pointer;
-            }
-
     </style>
 </head>
 <body>
-        <!-- Social Account Modal -->
-    <div id="socialModal" class="social-modal">
-    <div class="social-box">
-        <h3 id="socialTitle">Choose Account</h3>
-
-        <a id="officialLink" target="_blank" class="social-btn">Official Account</a>
-        <a id="channelLink" target="_blank" class="social-btn">Channel Account</a>
-
-        <button onclick="closeModal()" class="close-btn">Cancel</button>
-    </div>
-    </div>
-
-    <!-- Performance toggle button -->
-    <button class="performance-toggle" id="performance-toggle">
-        <i class="fas fa-tachometer-alt"></i>
-        <span id="performance-text">Lite Mode</span>
-    </button>
-    
-    <!-- Matrix background effect -->
-    <div class="matrix-background" id="matrix-background"></div>
+    <canvas id="matrix-canvas"></canvas>
+    <canvas id="particle-canvas"></canvas>
     
     <div class="container">
-        <!-- Terminal header -->
-        <div class="terminal-header">
-            <div class="terminal-buttons">
-                <div class="terminal-button red"></div>
-                <div class="terminal-button yellow"></div>
-                <div class="terminal-button green"></div>
-            </div>
-            <div class="terminal-title">Debasish@cyber:~/profile</div>
+        <div class="glitch-text">CYBER GATEWAY</div>
+        
+        <div class="instruction">
+            Click the button 20 times<br>
+            to unlock the cyber world portal
         </div>
         
-        <!-- Profile section -->
-        <div class="profile">
-            <div class="profile-img-container">
-                <img src="Profile.png" alt="Debasish Mitra" class="profile-img">
-            </div>
-            <h1 class="profile-name">Debasish Mitra</h1>
-            <div class="profile-title" id="profile-title"></div>
-            <span class="cursor" id="cursor"></span>
-        </div>
+        <div class="counter-display" id="counter">CLICKS: 0/20</div>
         
-        <!-- Skills section -->
-        <div class="skills">
-            <div class="skills-title">
-                <span class="command-prompt">#</span> Skills
-            </div>
-            <div class="skill-tags">
-                <span class="skill-tag">Hotelier</span>
-                <span class="skill-tag">Cyber_security</span>
-                <span class="skill-tag">Web designer</span>
-                <span class="skill-tag">Soft Skills</span>
-                <span class="skill-tag">Accounting</span>
-                <span class="skill-tag">Inquiring</span>
-            </div>
-        </div>
+        <button class="cyber-btn" id="click-btn">
+            ACTIVATE PORTAL
+        </button>
         
-        <!-- Links section -->
-        <div class="links">
-            <div class="link">
-                <a href="https://www.linkedin.com/in/debasishmitra7452/" target="_blank">
-                    <i class="fab fa-linkedin link-icon"></i>
-                    <span>LinkedIn Profile</span>
-                </a>
-            </div>
-            
-            <div class="link">
-                <a href="https://github.com/debasishmitra" target="_blank">
-                    <i class="fab fa-github link-icon"></i>
-                    <span>GitHub Projects</span>
-                </a>
-            </div>
-            
-            <div class="link">
-                <a href="https://youtube.com/" target="_blank">
-                    <i class="fab fa-youtube link-icon"></i>
-                    <span>YouTube Channel</span>
-                </a>
-            </div>
-            
-            <div class="link">
-                <a href="#" onclick="openSocial('instagram')">
-                    <i class="fab fa-instagram link-icon"></i>
-                    <span>Instagram</span>
-                </a>
-            </div>
-            
-            <div class="link">
-                <a href="https://whatsapp.com/" target="_blank">
-                    <i class="fab fa-telegram link-icon"></i>
-                    <span>‎WhatsApp Channel</span>
-                </a>
-            </div>
-            
-            <div class="link">
-                <a href="#" onclick="openSocial('facebook')">
-                    <i class="fab fa-facebook link-icon"></i>
-                    <span>Facebook</span>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Status bar -->
-        <div class="status-bar">
-            <div class="status-item">
-                <i class="fas fa-circle status-icon status-success"></i>
-                <span>Online</span>
-            </div>
-            <div class="status-item">
-                <i class="fas fa-code status-icon"></i>
-                <span>v1.0.3</span>
-            </div>
-        </div>
     </div>
     
-    <div class="footer">
-        <span class="code-tag">&lt;/&gt;</span> with 💻 by Debasish Mitra &copy; 2024
+    <div class="cyber-world" id="cyberWorld">
+        <div class="cyber-text">WELCOME TO CYBER WORLD</div>
+        <div class="hacker-text">// Access granted to hidden network</div>
+        <div class="hacker-text">// Initializing quantum encryption...</div>
+        <div class="countdown" id="countdown">5</div>
     </div>
 
     <script>
-        // Matrix rain effect
-        document.addEventListener('DOMContentLoaded', function() {
-            const matrixBackground = document.getElementById('matrix-background');
-            const characters = "01";
-            // Reduce number of columns for better performance
-            const columnCount = Math.floor(window.innerWidth / 40);
-            let animationsEnabled = true;
+        const clickBtn = document.getElementById('click-btn');
+        const counter = document.getElementById('counter');
+        const cyberWorld = document.getElementById('cyberWorld');
+        const matrixCanvas = document.getElementById('matrix-canvas');
+        const particleCanvas = document.getElementById('particle-canvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        const particleCtx = particleCanvas.getContext('2d');
+        
+        let clickCount = 0;
+        let particles = [];
+        let matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+        let matrixDrops = [];
+        
+        // Set canvas sizes
+        function resizeCanvases() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
             
-            function createMatrixEffect() {
-                // Clear existing columns
-                matrixBackground.innerHTML = '';
+            // Initialize matrix rain
+            matrixDrops = [];
+            for (let i = 0; i < 100; i++) {
+                matrixDrops[i] = {
+                    x: Math.random() * matrixCanvas.width,
+                    y: Math.random() * matrixCanvas.height,
+                    speed: Math.random() * 5 + 3,
+                    char: matrixChars[Math.floor(Math.random() * matrixChars.length)]
+                };
+            }
+        }
+        
+        resizeCanvases();
+        window.addEventListener('resize', resizeCanvases);
+        
+        // Matrix rain animation
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            matrixCtx.fillStyle = '#0f0';
+            matrixCtx.font = '15px monospace';
+            
+            matrixDrops.forEach(drop => {
+                matrixCtx.fillText(drop.char, drop.x, drop.y);
+                drop.y += drop.speed;
                 
-                if (!animationsEnabled) return;
+                if (drop.y > matrixCanvas.height) {
+                    drop.y = 0;
+                    drop.x = Math.random() * matrixCanvas.width;
+                }
                 
-                for (let i = 0; i < columnCount; i++) {
-                    const column = document.createElement('div');
-                    column.className = 'matrix-column';
-                    column.style.left = (i * 40) + 'px';
-                    
-                    // Random speed between 5-12 seconds
-                    const speed = 5 + Math.random() * 7;
-                    column.style.animationDuration = speed + 's';
-                    
-                    // Random delay
-                    column.style.animationDelay = Math.random() * 5 + 's';
-                    
-                    // Create column content
-                    let columnText = '';
-                    const length = 10 + Math.floor(Math.random() * 10);
-                    for (let j = 0; j < length; j++) {
-                        columnText += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
-                    }
-                    column.innerHTML = columnText;
-                    
-                    matrixBackground.appendChild(column);
+                drop.char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            });
+        }
+        
+        // Particle class for cyber effects
+        class CyberParticle {
+            constructor(x, y, type = 'normal') {
+                this.x = x;
+                this.y = y;
+                this.type = type;
+                
+                if (type === 'binary') {
+                    this.size = Math.random() * 10 + 5;
+                    this.speedX = Math.random() * 4 - 2;
+                    this.speedY = Math.random() * -8 - 4;
+                    this.text = Math.random() > 0.5 ? '0' : '1';
+                    this.color = '#0f0';
+                } else {
+                    this.size = Math.random() * 8 + 4;
+                    this.speedX = Math.random() * 6 - 3;
+                    this.speedY = Math.random() * -6 - 3;
+                    this.color = `hsl(${Math.random() * 60 + 160}, 100%, 50%)`;
+                }
+                
+                this.gravity = 0.1;
+                this.life = 100;
+            }
+            
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life--;
+            }
+            
+            draw() {
+                particleCtx.save();
+                particleCtx.globalAlpha = this.life / 100;
+                
+                if (this.type === 'binary') {
+                    particleCtx.fillStyle = this.color;
+                    particleCtx.font = `${this.size}px monospace`;
+                    particleCtx.fillText(this.text, this.x, this.y);
+                } else {
+                    particleCtx.fillStyle = this.color;
+                    particleCtx.beginPath();
+                    particleCtx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+                    particleCtx.fill();
+                }
+                
+                particleCtx.restore();
+            }
+        }
+        
+        // Create particle explosion
+        function createExplosion(x, y, count = 50) {
+            for (let i = 0; i < count; i++) {
+                particles.push(new CyberParticle(x, y, i % 2 === 0 ? 'binary' : 'normal'));
+            }
+        }
+        
+        // Animation loop
+        function animate() {
+            // Clear particle canvas with fade
+            particleCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            particleCtx.fillRect(0, 0, particleCanvas.width, particleCanvas.height);
+            
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
                 }
             }
             
-            // Initialize matrix effect
-            createMatrixEffect();
-            
-            // Typing effect initialization - Fixed to keep text visible after animation
-            const profileTitle = document.getElementById('profile-title');
-            const cursor = document.getElementById('cursor');
-            const fullText = "Developer, Gamer, Repair, Cyber Security and Hotelier";
-            profileTitle.textContent = '';
-            cursor.style.display = 'none';
-            
-            let charIndex = 0;
-            function typeWriter() {
-                if (charIndex < fullText.length) {
-                    profileTitle.textContent += fullText.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 50);
-                } else {
-                    // Keep the cursor blinking after typing is complete
-                    cursor.style.display = 'inline-block';
-                }
+            // Draw matrix rain if cyber world is active
+            if (cyberWorld.style.display === 'flex') {
+                drawMatrix();
             }
             
-            // Start typing after a short delay
-            setTimeout(typeWriter, 500);
+            requestAnimationFrame(animate);
+        }
+        
+        // Button click handler
+        clickBtn.addEventListener('click', function(e) {
+            clickCount++;
+            counter.textContent = `CLICKS: ${clickCount}/20`;
             
-            // Performance toggle functionality
-            const performanceToggle = document.getElementById('performance-toggle');
-            const performanceText = document.getElementById('performance-text');
+            // Create explosion at button position
+            const rect = this.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
             
-            performanceToggle.addEventListener('click', function() {
-                animationsEnabled = !animationsEnabled;
-                
-                if (animationsEnabled) {
-                    performanceText.textContent = 'Lite Mode';
-                    createMatrixEffect();
-                    document.documentElement.style.setProperty('--accent-color', '#00ff9d');
-                } else {
-                    performanceText.textContent = 'Full Mode';
-                    matrixBackground.innerHTML = '';
-                    document.documentElement.style.setProperty('--accent-color', '#00cc7d');
-                }
-            });
+            createExplosion(x, y, 30);
             
-            // Reinitialize matrix effect on window resize
-            let resizeTimeout;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(function() {
-                    if (animationsEnabled) {
-                        createMatrixEffect();
-                    }
-                }, 200);
-            });
+            // Button animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
+            
+            // Change button color based on clicks
+            const progress = clickCount / 20;
+            const hue = 160 + (progress * 120); // Blue to Green
+            this.style.background = `linear-gradient(45deg, hsl(${hue}, 100%, 50%), hsl(${hue + 40}, 100%, 50%))`;
+            
+            // Check if reached 20 clicks
+            if (clickCount === 20) {
+                setTimeout(() => {
+                    activateCyberWorld();
+                }, 500);
+            }
         });
-                function openSocial(type){
-        const modal = document.getElementById("socialModal");
-
-        if(type === "instagram"){
-            document.getElementById("socialTitle").innerText = "Instagram Accounts";
-            document.getElementById("officialLink").href = "https://www.instagram.com/debasishmitra7452";
-            document.getElementById("channelLink").href = "https://www.instagram.com/debasishmitra7452";
+        
+        // Activate cyber world
+        function activateCyberWorld() {
+            // Hide main container
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.pointerEvents = 'none';
+            
+            // Show cyber world
+            cyberWorld.style.display = 'flex';
+            
+            // Create massive explosion
+            createExplosion(window.innerWidth / 2, window.innerHeight / 2, 500);
+            
+            // Start countdown
+            let count = 5;
+            const countdown = document.getElementById('countdown');
+            countdown.textContent = count;
+            
+            const countdownInterval = setInterval(() => {
+                count--;
+                countdown.textContent = count;
+                
+                if (count === 0) {
+                    clearInterval(countdownInterval);
+                    redirectToCyberSite();
+                }
+            }, 1000);
         }
-
-        if(type === "facebook"){
-            document.getElementById("socialTitle").innerText = "Facebook Accounts";
-            document.getElementById("officialLink").href = "https://www.facebook.com/DebasishMitra7452/";
-            document.getElementById("channelLink").href = "https://www.facebook.com/DebasishMitra7452/";
+        
+        // Redirect to cyber site
+        function redirectToCyberSite() {
+            window.location.href = '/index.html';
         }
-
-        modal.style.display = "flex";
-        }
-
-        function closeModal(){
-        document.getElementById("socialModal").style.display = "none";
-        }
-
+        
+        // Start animations
+        animate();
+        
+        // Auto-click hints
+        let autoHint = 0;
+        const autoHintInterval = setInterval(() => {
+            if (clickCount < 20) {
+                autoHint++;
+                if (autoHint % 10 === 0) {
+                    createExplosion(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight,
+                        10
+                    );
+                }
+            } else {
+                clearInterval(autoHintInterval);
+            }
+        }, 1000);
+        
+        // YouTube button hover effect
+        document.querySelector('.youtube-btn').addEventListener('mouseenter', () => {
+            createExplosion(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight,
+                20
+            );
+        });
     </script>
 </body>
 </html>
