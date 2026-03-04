@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#3d1a6b"/>
+      <stop offset="60%" stop-color="#1a0a3a"/>
+      <stop offset="100%" stop-color="#08050f"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#ff6a00" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ff6a00" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="title-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff6a00"/>
+      <stop offset="100%" stop-color="#ffd700"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="300" fill="url(#bg)"/>
+  <rect width="300" height="300" fill="url(#glow)"/>
+  <!-- decorative rings -->
+  <circle cx="150" cy="130" r="90" fill="none" stroke="#ff6a00" stroke-width="0.5" stroke-opacity="0.3"/>
+  <circle cx="150" cy="130" r="70" fill="none" stroke="#ffd700" stroke-width="0.5" stroke-opacity="0.2"/>
+  <circle cx="150" cy="130" r="50" fill="none" stroke="#ff6a00" stroke-width="0.5" stroke-opacity="0.15"/>
+  <!-- crown icon -->
+  <g transform="translate(105,70)">
+    <path d="M0,50 L10,20 L30,40 L45,5 L60,40 L80,20 L90,50 Z" fill="url(#title-grad)" opacity="0.9"/>
+    <rect x="0" y="52" width="90" height="10" rx="3" fill="#ffd700" opacity="0.7"/>
+  </g>
+  <!-- title text -->
+  <text x="150" y="175" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="url(#title-grad)" letter-spacing="2">QUEEN</text>
+  <text x="150" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#ff9c50" letter-spacing="3" opacity="0.8">ORIGINAL SOUNDTRACK</text>
+  <!-- bottom line -->
+  <line x1="60" y1="215" x2="240" y2="215" stroke="#ff6a00" stroke-width="0.5" stroke-opacity="0.4"/>
+  <text x="150" y="233" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#cc8840" letter-spacing="2" opacity="0.7">AMIT TRIVEDI · 2014</text>
+  <!-- shimmer dots -->
+  <circle cx="60" cy="60" r="1.5" fill="#ffd700" opacity="0.5"/>
+  <circle cx="240" cy="80" r="1" fill="#ff6a00" opacity="0.6"/>
+  <circle cx="80" cy="240" r="1" fill="#ffd700" opacity="0.4"/>
+  <circle cx="220" cy="250" r="1.5" fill="#ff6a00" opacity="0.5"/>
+  <circle cx="30" cy="150" r="1" fill="#ffd700" opacity="0.4"/>
+  <circle cx="270" cy="160" r="1" fill="#ff6a00" opacity="0.5"/>
+</svg>

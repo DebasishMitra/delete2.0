@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Delete_Music_Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { margin: 0; background: #080612; }
+      #loading-screen {
+        position: fixed; inset: 0; z-index: 9999;
+        background: #080612;
+        display: flex; align-items: center; justify-content: center;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+      }
+      #loading-screen.ls-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+      .ls-bg-grid {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(139,92,246,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(139,92,246,0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .ls-content {
+        position: relative; z-index: 1;
+        display: flex; flex-direction: column; align-items: center; gap: 20px;
+        width: min(360px, 90vw);
+      }
+      .ls-logo {
+        font-family: 'Orbitron', monospace; font-size: 1.4rem; font-weight: 900;
+        color: #8b5cf6; letter-spacing: 0.1em;
+        text-shadow: 0 0 20px rgba(139,92,246,0.6);
+      }
+      .ls-logo span { color: #f59e0b; }
+      .ls-tagline {
+        font-family: 'Orbitron', monospace; font-size: 0.65rem;
+        color: #4a3d70; letter-spacing: 0.2em;
+      }
+      .ls-spinner {
+        width: 52px; height: 52px;
+        border: 3px solid rgba(139,92,246,0.2);
+        border-top-color: #8b5cf6;
+        border-right-color: #f59e0b;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .ls-bar-track {
+        width: 100%; height: 3px;
+        background: rgba(139,92,246,0.1); border-radius: 2px; overflow: hidden;
+      }
+      .ls-bar-fill {
+        height: 100%; width: 0;
+        background: linear-gradient(90deg, #8b5cf6, #f59e0b);
+        transition: width 0.35s ease;
+      }
+      .ls-status {
+        font-family: 'Orbitron', monospace; font-size: 0.6rem;
+        letter-spacing: 0.15em; color: #4a3d70;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="ls-bg-grid"></div>
+      <div class="ls-content">
+        <div class="ls-logo">DELETE_<span>MUSIC_HUB</span></div>
+        <div class="ls-tagline">CYBER MUSIC SYSTEM v2.0</div>
+        <div class="ls-spinner"></div>
+        <div class="ls-bar-track"><div class="ls-bar-fill"></div></div>
+        <div class="ls-status" id="ls-status">INITIALIZING AUDIO CORE...</div>
+      </div>
+    </div>
+
+    <div id="app"></div>
+    <audio id="app-audio" preload="none"></audio>
+    <div id="fullscreen-overlay" style="display:none"></div>
+    <div id="mini-player-root"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
