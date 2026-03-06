@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delflix</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-left">
+      <div class="logo">Delflix</div>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link active" data-filter="all">Home</a></li>
+        <li><a href="#" class="nav-link" data-filter="movie">Movies</a></li>
+        <li><a href="#" class="nav-link" data-filter="series">Web Series</a></li>
+        <li><a href="#" class="nav-link" data-filter="anime">Anime</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrapper">
+        <button class="search-btn" id="searchBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+          </svg>
+        </button>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search titles...">
+      </div>
+      <a href="admin.html" class="admin-link" title="Admin Panel">⚙ Admin</a>
+      <div class="avatar">SV</div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu hidden" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#" class="mobile-nav-link active" data-filter="all">🏠 Home</a>
+      <a href="#" class="mobile-nav-link" data-filter="movie">🎬 Movies</a>
+      <a href="#" class="mobile-nav-link" data-filter="series">📺 Web Series</a>
+      <a href="#" class="mobile-nav-link" data-filter="anime">⚡ Anime</a>
+      <a href="admin.html" class="mobile-nav-link">⚙ Admin Panel</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge" id="heroBadge">FEATURED</div>
+      <h1 class="hero-title" id="heroTitle">Loading...</h1>
+      <p class="hero-desc" id="heroDesc"></p>
+      <div class="hero-meta" id="heroMeta"></div>
+      <div class="hero-actions">
+        <button class="btn btn-play" id="heroPlayBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          Play Now
+        </button>
+        <button class="btn btn-info" id="heroInfoBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z"/>
+          </svg>
+          More Info
+        </button>
+      </div>
+    </div>
+    <div class="hero-indicators" id="heroIndicators"></div>
+  </section>
+
+  <!-- Genre Bar -->
+  <div class="genre-bar-wrap" id="genreBarWrap">
+    <div class="genre-bar" id="genreBar"></div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Search Results -->
+    <section class="search-results hidden" id="searchResults">
+      <h2 class="section-title">Search Results</h2>
+      <div class="grid-layout" id="searchGrid"></div>
+    </section>
+
+    <!-- Trending Now -->
+    <section class="content-row" id="trendingRow">
+      <div class="row-header">
+        <h2 class="section-title">🔥 Trending Now</h2>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('trending', -1)">&#8249;</button>
+        <div class="cards-container" id="trending"></div>
+        <button class="slider-btn next" onclick="slide('trending', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- Movies -->
+    <section class="content-row" id="moviesRow">
+      <div class="row-header">
+        <h2 class="section-title">🎬 Popular Movies</h2>
+        <a href="#" class="see-all" data-filter="movie">See All</a>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('movies', -1)">&#8249;</button>
+        <div class="cards-container" id="movies"></div>
+        <button class="slider-btn next" onclick="slide('movies', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- Web Series -->
+    <section class="content-row" id="seriesRow">
+      <div class="row-header">
+        <h2 class="section-title">📺 Top Web Series</h2>
+        <a href="#" class="see-all" data-filter="series">See All</a>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('series', -1)">&#8249;</button>
+        <div class="cards-container" id="series"></div>
+        <button class="slider-btn next" onclick="slide('series', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- Anime -->
+    <section class="content-row" id="animeRow">
+      <div class="row-header">
+        <h2 class="section-title">⚡ Top Anime</h2>
+        <a href="#" class="see-all" data-filter="anime">See All</a>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('anime', -1)">&#8249;</button>
+        <div class="cards-container" id="anime"></div>
+        <button class="slider-btn next" onclick="slide('anime', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- New Releases -->
+    <section class="content-row" id="newRow">
+      <div class="row-header">
+        <h2 class="section-title">🆕 New Releases</h2>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('new', -1)">&#8249;</button>
+        <div class="cards-container" id="new"></div>
+        <button class="slider-btn next" onclick="slide('new', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- Unknown / Orphan Files -->
+    <section class="content-row hidden" id="unknownRow">
+      <div class="row-header">
+        <h2 class="section-title">📂 Unknown / Uncategorized</h2>
+        <span style="font-size:12px;color:var(--text-dim);margin-left:8px">Files found in media folder with no content entry</span>
+      </div>
+      <div class="slider-wrapper">
+        <button class="slider-btn prev" onclick="slide('unknown', -1)">&#8249;</button>
+        <div class="cards-container" id="unknown"></div>
+        <button class="slider-btn next" onclick="slide('unknown', 1)">&#8250;</button>
+      </div>
+    </section>
+
+    <!-- All Content Grid (filtered view) -->
+    <section class="all-content hidden" id="allContent">
+      <div class="row-header">
+        <h2 class="section-title" id="allContentTitle">All Content</h2>
+        <button class="back-btn" id="backBtn">← Back to Home</button>
+      </div>
+      <div class="grid-layout" id="allGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-hero">
+        <div class="modal-hero-bg" id="modalBg"></div>
+        <div class="modal-hero-overlay"></div>
+        <div class="modal-hero-content">
+          <span class="modal-badge" id="modalBadge"></span>
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <div class="modal-actions">
+            <button class="btn btn-play" id="modalPlayBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Play
+            </button>
+            <button class="btn btn-trailer" id="modalTrailerBtn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 3H3c-1.11 0-2 .89-2 2v14c0 1.1.89 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/>
+              </svg>
+              Watch Trailer
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-info-grid">
+          <div class="modal-main">
+            <div class="modal-meta" id="modalMeta"></div>
+            <p class="modal-desc" id="modalDesc"></p>
+          </div>
+          <div class="modal-side">
+            <p><span class="label">Genre:</span> <span id="modalGenre"></span></p>
+            <p><span class="label">Rating:</span> <span id="modalRating"></span></p>
+            <p><span class="label">Year:</span> <span id="modalYear"></span></p>
+            <p><span class="label">Type:</span> <span id="modalType"></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- Video Player -->
+  <div class="player-overlay hidden" id="playerOverlay">
+
+    <!-- Top bar -->
+    <div class="player-topbar" id="playerTopbar">
+      <div class="player-info">
+        <span class="player-badge" id="playerBadge"></span>
+        <span class="player-title" id="playerTitle"></span>
+      </div>
+      <button class="player-close" id="playerClose">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Close
+      </button>
+    </div>
+
+    <!-- Video stage -->
+    <div class="player-stage" id="playerStage"></div>
+
+    <!-- Controls bar -->
+    <div class="player-controls" id="playerControls">
+
+      <!-- Progress -->
+      <div class="player-progress-wrap">
+        <span class="ptime" id="pCurrentTime">0:00</span>
+        <div class="player-progress-track" id="progressTrack">
+          <div class="player-progress-fill" id="progressFill"></div>
+          <div class="player-progress-thumb" id="progressThumb"></div>
+          <input type="range" class="player-range-overlay" id="progressBar" min="0" max="100" value="0" step="0.1">
+        </div>
+        <span class="ptime" id="pTotalTime">0:00</span>
+      </div>
+
+      <!-- Buttons row -->
+      <div class="player-btn-row">
+
+        <!-- Left side -->
+        <div class="player-ctrl-left">
+
+          <button class="pctrl-btn" id="playPauseBtn" title="Play / Pause">
+            <svg id="playIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+
+          <!-- Volume -->
+          <div class="pctrl-group">
+            <button class="pctrl-btn" id="muteBtn" title="Mute">
+              <svg id="volIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+              <svg id="muteIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="hidden"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            </button>
+            <div class="pctrl-slider-wrap">
+              <div class="pctrl-slider-track">
+                <div class="pctrl-slider-fill" id="volFill"></div>
+                <input type="range" class="pctrl-slider" id="volumeBar" min="0" max="200" value="100" step="1">
+              </div>
+              <span class="pctrl-label" id="volumeLabel">100%</span>
+            </div>
+          </div>
+
+          <!-- Brightness -->
+          <div class="pctrl-group">
+            <span class="pctrl-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .38-.39.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.38.39-1.02 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06z"/></svg>
+            </span>
+            <div class="pctrl-slider-wrap">
+              <div class="pctrl-slider-track">
+                <div class="pctrl-slider-fill" id="brightFill"></div>
+                <input type="range" class="pctrl-slider" id="brightnessBar" min="10" max="200" value="100" step="1">
+              </div>
+              <span class="pctrl-label" id="brightnessLabel">100%</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right side -->
+        <div class="player-ctrl-right">
+
+          <!-- Playback Speed -->
+          <div class="pctrl-popup-wrap" id="speedWrap">
+            <button class="pctrl-btn pctrl-text-btn" id="speedBtn" title="Playback Speed">1×</button>
+            <div class="pctrl-popup hidden" id="speedPopup">
+              <div class="popup-header">Playback Speed</div>
+              <div class="popup-options" id="speedOptions"></div>
+            </div>
+          </div>
+
+          <!-- Subtitles -->
+          <div class="pctrl-popup-wrap" id="subtitleWrap">
+            <button class="pctrl-btn pctrl-text-btn" id="subtitleBtn" title="Subtitles / CC">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-9 8H9v-1H7v2h2v1H7v-1H5v2h6v-5zm8 0h-2v-1h-2v2h2v1h-2v-1h-2v2h6v-5z"/></svg>
+            </button>
+            <div class="pctrl-popup hidden" id="subtitlePopup">
+              <div class="popup-header">Subtitles / CC</div>
+              <div class="popup-options" id="subtitleOptions"></div>
+              <div class="popup-divider"></div>
+              <label class="popup-upload-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                Load .vtt file
+                <input type="file" id="subtitleFileInput" accept=".vtt,.srt" hidden>
+              </label>
+            </div>
+          </div>
+
+          <!-- Audio Track -->
+          <div class="pctrl-popup-wrap" id="audioWrap">
+            <button class="pctrl-btn" id="audioTrackBtn" title="Audio Track">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </button>
+            <div class="pctrl-popup hidden" id="audioPopup">
+              <div class="popup-header">Audio Track</div>
+              <div class="popup-options" id="audioOptions"></div>
+            </div>
+          </div>
+
+          <!-- Video Quality -->
+          <div class="pctrl-popup-wrap" id="qualityWrap">
+            <button class="pctrl-btn pctrl-text-btn" id="qualityBtn" title="Video Quality">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 8h-2v4h-2V9h4v2zm4 4h-4V9h2v4h2v-4h2v6h-2v-2z"/></svg>
+            </button>
+            <div class="pctrl-popup hidden" id="qualityPopup">
+              <div class="popup-header">Video Quality</div>
+              <div class="popup-options" id="qualityOptions"></div>
+            </div>
+          </div>
+
+          <!-- PiP -->
+          <button class="pctrl-btn" id="pipBtn" title="Picture in Picture">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg>
+          </button>
+
+          <!-- Fullscreen -->
+          <button class="pctrl-btn" id="fullscreenBtn" title="Fullscreen">
+            <svg id="fsEnterIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+            <svg id="fsExitIcon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="hidden"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Trailer Modal -->
+  <div class="trailer-overlay hidden" id="trailerOverlay">
+    <div class="trailer-box">
+      <div class="trailer-topbar">
+        <span class="trailer-label" id="trailerLabel">Trailer</span>
+        <button class="trailer-close-btn" id="trailerCloseBtn">✕</button>
+      </div>
+      <div class="trailer-frame-wrap">
+        <iframe id="trailerIframe" frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delflix Admin</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="logo-icon">SV</span>
+        <div>
+          <div class="logo-text">Delflix</div>
+          <div class="logo-sub">Admin Panel</div>
+        </div>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label">Main</div>
+        <a href="#" class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-page="upload">
+          <span class="nav-icon">⬆️</span>
+          <span class="nav-label">Upload Content</span>
+        </a>
+        <a href="#" class="nav-item" data-page="manage">
+          <span class="nav-icon">🎬</span>
+          <span class="nav-label">Manage Content</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">Organization</div>
+        <a href="#" class="nav-item" data-page="categories">
+          <span class="nav-icon">📂</span>
+          <span class="nav-label">Categories</span>
+        </a>
+        <a href="#" class="nav-item" data-page="featured">
+          <span class="nav-icon">⭐</span>
+          <span class="nav-label">Featured / Hero</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">System</div>
+        <a href="#" class="nav-item" data-page="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </a>
+        <a href="index.html" class="nav-item" target="_blank">
+          <span class="nav-icon">🌐</span>
+          <span class="nav-label">View Site</span>
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="admin-main" id="adminMain">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-badge" id="contentCount">Loading...</div>
+        <div class="admin-avatar">AD</div>
+      </div>
+    </header>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-icon">🎭</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total Content</div>
+          </div>
+        </div>
+        <div class="stat-card stat-movie">
+          <div class="stat-icon">🎬</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statMovies">0</div>
+            <div class="stat-label">Movies</div>
+          </div>
+        </div>
+        <div class="stat-card stat-series">
+          <div class="stat-icon">📺</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statSeries">0</div>
+            <div class="stat-label">Web Series</div>
+          </div>
+        </div>
+        <div class="stat-card stat-anime">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statAnime">0</div>
+            <div class="stat-label">Anime</div>
+          </div>
+        </div>
+        <div class="stat-card stat-custom">
+          <div class="stat-icon">✨</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statCustom">0</div>
+            <div class="stat-label">Custom Added</div>
+          </div>
+        </div>
+        <div class="stat-card stat-cat">
+          <div class="stat-icon">📂</div>
+          <div class="stat-body">
+            <div class="stat-value" id="statCategories">0</div>
+            <div class="stat-label">Categories</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>Recent Uploads</h3>
+            <button class="btn-small btn-primary" onclick="goTo('upload')">+ Add New</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="recentTable">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Rating</th>
+                  <th>Year</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recentBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>Quick Actions</h3>
+          </div>
+          <div class="quick-actions">
+            <button class="qa-btn" onclick="goTo('upload')">
+              <span class="qa-icon">🎬</span>
+              <span>Upload Movie</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('upload')">
+              <span class="qa-icon">📺</span>
+              <span>Upload Series</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('upload')">
+              <span class="qa-icon">⚡</span>
+              <span>Upload Anime</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('categories')">
+              <span class="qa-icon">📂</span>
+              <span>Add Category</span>
+            </button>
+            <button class="qa-btn" onclick="goTo('featured')">
+              <span class="qa-icon">⭐</span>
+              <span>Set Featured</span>
+            </button>
+            <button class="qa-btn danger" onclick="confirmClearAll()">
+              <span class="qa-icon">🗑️</span>
+              <span>Clear Custom Data</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== UPLOAD CONTENT ===== -->
+    <section class="page" id="page-upload">
+      <div class="form-container">
+        <div class="form-header">
+          <h2 id="formHeading">Upload New Content</h2>
+          <p class="form-sub">Fill in the details below. Fields marked with * are required.</p>
+        </div>
+
+        <form id="contentForm" class="content-form">
+          <input type="hidden" id="editId">
+
+          <div class="form-grid">
+            <!-- LEFT COLUMN -->
+            <div class="form-col">
+              <div class="form-section-title">Basic Information</div>
+
+              <div class="form-group">
+                <label class="form-label">Title *</label>
+                <input type="text" class="form-input" id="fTitle" placeholder="Enter title..." required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Content Type *</label>
+                  <select class="form-input" id="fType" required>
+                    <option value="">Select type</option>
+                    <option value="movie">Movie</option>
+                    <option value="series">Web Series</option>
+                    <option value="anime">Anime</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Category</label>
+                  <select class="form-input" id="fCategory">
+                    <option value="">Select category</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Rating (0–10) *</label>
+                  <input type="number" class="form-input" id="fRating" min="0" max="10" step="0.1" placeholder="8.5" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Release Year *</label>
+                  <input type="number" class="form-input" id="fYear" min="1900" max="2030" placeholder="2024" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Genre *</label>
+                <input type="text" class="form-input" id="fGenre" placeholder="Action, Sci-Fi, Thriller..." required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Tags <span class="label-hint">(comma separated)</span></label>
+                <input type="text" class="form-input" id="fTags" placeholder="Epic, Dark, Action...">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Description *</label>
+                <textarea class="form-input form-textarea" id="fDesc" rows="4" placeholder="Enter description..." required></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label checkbox-label">
+                    <input type="checkbox" id="fTrending" class="form-check">
+                    <span>Mark as Trending</span>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label class="form-label checkbox-label">
+                    <input type="checkbox" id="fNewRelease" class="form-check">
+                    <span>Mark as New Release</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="form-col">
+              <div class="form-section-title">Media & Appearance</div>
+
+              <div class="form-group">
+                <label class="form-label">Video File</label>
+                <div class="upload-zone" id="videoZone" onclick="document.getElementById('fVideo').click()">
+                  <div class="upload-icon">🎬</div>
+                  <div class="upload-text">Click to upload video</div>
+                  <div class="upload-hint">MP4 · MKV · MOV · WEBM · AVI · FLV · WMV · M4V · MPEG · 3GP</div>
+                  <div class="upload-filename" id="videoFilename"></div>
+                </div>
+                <input type="file" id="fVideo" accept="video/mp4,video/x-matroska,video/quicktime,video/webm,video/x-msvideo,video/x-flv,video/x-ms-wmv,video/mp2t,video/mpeg,video/3gpp,.mp4,.mkv,.mov,.webm,.avi,.flv,.wmv,.m4v,.mpg,.mpeg,.3gp,.ts" hidden>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Thumbnail / Poster <span style="font-size:11px;color:var(--text-dim)">(card image, portrait)</span></label>
+                <div class="upload-zone small" id="thumbZone" onclick="document.getElementById('fThumb').click()">
+                  <div id="thumbPreview" class="thumb-preview-wrap">
+                    <div class="upload-icon">🖼️</div>
+                    <div class="upload-text">Click to upload poster</div>
+                    <div class="upload-hint">JPG, PNG, WEBP · portrait ratio</div>
+                  </div>
+                </div>
+                <input type="file" id="fThumb" accept="image/*" hidden>
+                <div style="font-size:11px;color:var(--text-dim);margin:6px 0 4px">— or paste a poster image URL —</div>
+                <input type="url" class="form-input" id="fImageUrl" placeholder="https://example.com/poster.jpg">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Banner / Hero Image <span style="font-size:11px;color:var(--text-dim)">(wide background for hero section)</span></label>
+                <div class="upload-zone small" id="bannerZone" onclick="document.getElementById('fBannerFile').click()">
+                  <div id="bannerPreview" class="thumb-preview-wrap">
+                    <div class="upload-icon">🌅</div>
+                    <div class="upload-text">Click to upload banner</div>
+                    <div class="upload-hint">JPG, PNG, WEBP · wide/landscape</div>
+                  </div>
+                </div>
+                <input type="file" id="fBannerFile" accept="image/*" hidden>
+                <div style="font-size:11px;color:var(--text-dim);margin:6px 0 4px">— or paste a banner image URL —</div>
+                <input type="url" class="form-input" id="fBannerUrl" placeholder="https://example.com/banner.jpg">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Trailer</label>
+                <div class="upload-zone small" id="trailerZone" onclick="document.getElementById('fTrailerFile').click()">
+                  <div class="upload-icon">🎞️</div>
+                  <div class="upload-text">Click to upload trailer video</div>
+                  <div class="upload-hint">MP4 · MKV · MOV · WEBM and other formats</div>
+                  <div class="upload-filename" id="trailerFilename"></div>
+                </div>
+                <input type="file" id="fTrailerFile" accept="video/*,.mkv,.avi,.flv,.wmv" hidden>
+                <div style="font-size:11px;color:var(--text-dim);margin:6px 0 4px">— or paste a YouTube / direct video URL —</div>
+                <input type="url" class="form-input" id="fTrailerUrl" placeholder="https://youtube.com/watch?v=...">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Card Background Color</label>
+                <div class="color-presets" id="colorPresets">
+                  <div class="color-preset active" data-color="linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)" style="background: linear-gradient(135deg, #1a1a2e, #0f3460)" title="Blue Night"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #0d0d0d 0%, #1a0a2e 40%, #2d1b69 100%)" style="background: linear-gradient(135deg, #0d0d0d, #2d1b69)" title="Deep Purple"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #1a0000 0%, #3d0000 40%, #6b0000 100%)" style="background: linear-gradient(135deg, #1a0000, #6b0000)" title="Dark Red"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #001a00 0%, #003d1a 40%, #006b2e 100%)" style="background: linear-gradient(135deg, #001a00, #006b2e)" title="Forest Green"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #1a0800 0%, #3d1a00 40%, #6b2d00 100%)" style="background: linear-gradient(135deg, #1a0800, #6b2d00)" title="Amber"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #001a1a 0%, #003d3d 40%, #005c5c 100%)" style="background: linear-gradient(135deg, #001a1a, #005c5c)" title="Teal"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #0a001a 0%, #1a003d 40%, #2d006b 100%)" style="background: linear-gradient(135deg, #0a001a, #2d006b)" title="Violet"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #1a000a 0%, #3d0020 40%, #6b0038 100%)" style="background: linear-gradient(135deg, #1a000a, #6b0038)" title="Magenta"></div>
+                  <div class="color-preset" data-color="linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #2d2d2d 100%)" style="background: linear-gradient(135deg, #0a0a0a, #2d2d2d)" title="Dark Grey"></div>
+                </div>
+                <input type="hidden" id="fColor" value="linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Accent Color</label>
+                <div class="accent-row">
+                  <input type="color" id="fAccent" value="#4a90e2" class="color-picker">
+                  <span class="accent-hint">Used for highlights on the card</span>
+                </div>
+              </div>
+
+              <div class="card-preview-wrap">
+                <div class="form-section-title">Card Preview</div>
+                <div class="card-preview" id="cardPreview">
+                  <div class="cp-poster" id="cpPoster">
+                    <span class="cp-badge" id="cpBadge">MOVIE</span>
+                    <span class="cp-rating" id="cpRating">★ 8.5</span>
+                  </div>
+                  <div class="cp-info">
+                    <div class="cp-title" id="cpTitle">Title Preview</div>
+                    <div class="cp-sub" id="cpSub">2024 · Genre</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" onclick="resetForm()">Clear Form</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <span>💾</span> Save Content
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== MANAGE CONTENT ===== -->
+    <section class="page" id="page-manage">
+      <div class="manage-toolbar">
+        <div class="search-bar-wrap">
+          <input type="text" class="search-bar" id="manageSearch" placeholder="Search content...">
+        </div>
+        <div class="filter-row">
+          <select class="form-input filter-select" id="manageFilter">
+            <option value="all">All Types</option>
+            <option value="movie">Movies</option>
+            <option value="series">Web Series</option>
+            <option value="anime">Anime</option>
+          </select>
+          <select class="form-input filter-select" id="manageSource">
+            <option value="all">All Sources</option>
+            <option value="custom">Custom Only</option>
+            <option value="built-in">Built-in Only</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="goTo('upload')">+ Add Content</button>
+      </div>
+
+      <div class="table-wrap full">
+        <table class="data-table" id="manageTable">
+          <thead>
+            <tr>
+              <th>Poster</th>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Genre</th>
+              <th>Rating</th>
+              <th>Year</th>
+              <th>Flags</th>
+              <th>Source</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="manageBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== CATEGORIES ===== -->
+    <section class="page" id="page-categories">
+      <div class="cat-layout">
+        <div class="cat-form-card">
+          <h3 class="dash-card-title">Add / Edit Category</h3>
+          <form id="categoryForm">
+            <input type="hidden" id="catEditId">
+            <div class="form-group">
+              <label class="form-label">Category Name *</label>
+              <input type="text" class="form-input" id="catName" placeholder="e.g. Thriller" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input type="text" class="form-input" id="catDesc" placeholder="Brief description...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Icon / Emoji</label>
+              <input type="text" class="form-input" id="catIcon" placeholder="🎭" maxlength="4">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Color</label>
+              <input type="color" id="catColor" value="#e50914" class="color-picker full-width">
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" onclick="resetCatForm()">Clear</button>
+              <button type="submit" class="btn btn-primary">Save Category</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="cat-list-card">
+          <div class="dash-card-header">
+            <h3 class="dash-card-title">All Categories</h3>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="badge" id="catCount">0</span>
+              <button class="btn-small btn-ghost" onclick="resetToDefaultCategories()" title="Restore all 25 default categories">↺ Reset Defaults</button>
+            </div>
+          </div>
+          <div class="cat-list" id="catList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED / HERO ===== -->
+    <section class="page" id="page-featured">
+      <div class="featured-layout">
+        <div class="featured-info">
+          <h3>Hero Banner</h3>
+          <p>The hero banner automatically rotates through all your uploaded content in a random order on each page load. You can optionally pin specific items below — pinned items will always appear in the rotation first.</p>
+          <div class="featured-selected" id="featuredSelected"></div>
+        </div>
+        <div class="featured-picker">
+          <input type="text" class="search-bar" id="featSearch" placeholder="Search to add...">
+          <div class="feat-list" id="featList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="page" id="page-settings">
+      <div class="settings-layout">
+        <div class="settings-card">
+          <h3 class="dash-card-title">Site Settings</h3>
+          <div class="form-group">
+            <label class="form-label">Site Name</label>
+            <input type="text" class="form-input" id="setSiteName" value="Delflix">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tagline</label>
+            <input type="text" class="form-input" id="setTagline" placeholder="Watch anything, anywhere.">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hero Auto-Rotate Speed (seconds)</label>
+            <input type="number" class="form-input" id="setHeroSpeed" min="2" max="30" value="5">
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="dash-card-title">Data Management</h3>
+          <div class="data-actions">
+            <div class="data-action-item">
+              <div>
+                <div class="data-label">Export Content Data</div>
+                <div class="data-hint">Download all custom content as JSON</div>
+              </div>
+              <button class="btn btn-ghost" onclick="exportData()">⬇ Export</button>
+            </div>
+            <div class="data-action-item">
+              <div>
+                <div class="data-label">Import Content Data</div>
+                <div class="data-hint">Upload a previously exported JSON file</div>
+              </div>
+              <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">⬆ Import</button>
+              <input type="file" id="importFile" accept=".json" hidden>
+            </div>
+            <div class="data-action-item danger-zone">
+              <div>
+                <div class="data-label">Clear All Custom Content</div>
+                <div class="data-hint">This removes all admin-added content permanently</div>
+              </div>
+              <button class="btn btn-danger" onclick="confirmClearAll()">🗑 Clear All</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="dash-card-title">About</h3>
+          <div class="about-info">
+            <div class="about-row"><span>Version</span><span>1.0.0</span></div>
+            <div class="about-row"><span>Built-in Content</span><span id="aboutBuiltin">36 items</span></div>
+            <div class="about-row"><span>Custom Content</span><span id="aboutCustom">0 items</span></div>
+            <div class="about-row"><span>Storage Used</span><span id="aboutStorage">0 KB</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay hidden" id="confirmModal">
+    <div class="confirm-modal">
+      <div class="confirm-icon" id="confirmIcon">🗑️</div>
+      <h3 id="confirmTitle">Delete Content?</h3>
+      <p id="confirmMessage">This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-ghost" onclick="closeConfirm()">Cancel</button>
+        <button class="btn btn-danger" id="confirmBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="admin-toast hidden" id="adminToast"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
